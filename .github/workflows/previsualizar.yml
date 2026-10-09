@@ -35,6 +35,7 @@ concurrency:
 
 env:
   PROYECTO: claude-projects-496723
+  SITIO: guia-gcp-albertosolano
 
 jobs:
   previsualizar:
@@ -108,9 +109,13 @@ jobs:
           printf '%s' "$CLAVE" > "$F"
           export GOOGLE_APPLICATION_CREDENTIALS="$F"
 
+          # --site es obligatorio: el CLI ignora hosting.site de firebase.json en
+          # este comando y apunta al sitio por defecto del proyecto, que no es el
+          # nuestro; eso devuelve un 404 engañoso. Y el `|| CODIGO=$?` evita que el
+          # `-e` del shell de Actions aborte antes de imprimir la salida.
           SALIDA=$(mktemp)
-          firebase hosting:channel:delete "$CANAL" --force --project "$PROYECTO" >"$SALIDA" 2>&1
-          CODIGO=$?
+          CODIGO=0
+          firebase hosting:channel:delete "$CANAL" --site "$SITIO" --force --project "$PROYECTO" >"$SALIDA" 2>&1 || CODIGO=$?
           cat "$SALIDA"
 
           shred -u "$F" 2>/dev/null || rm -f "$F"
