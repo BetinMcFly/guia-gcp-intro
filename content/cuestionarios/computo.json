@@ -1,1 +1,67 @@
-[]
+[
+  {
+    "id": "computo-01",
+    "pregunta": "¿Qué distingue, en el fondo, a las tres opciones de cómputo de Google Cloud?",
+    "opciones": [
+      "El lenguaje de programación que admite cada una.",
+      "La región en la que están disponibles.",
+      "El precio por hora, que es el mismo en las tres.",
+      "Cuánta operación asume el equipo propio y cuánta asume Google, y por qué se paga."
+    ],
+    "correcta": 3,
+    "explicacion": "Una máquina virtual la administra el equipo; en GKE Autopilot y en Cloud Run, Google administra las máquinas de debajo. Y cada opción cobra por una cosa distinta: tiempo encendida, solicitudes atendidas o recursos pedidos.",
+    "ancla": "#tres-maneras-de-ejecutar-software"
+  },
+  {
+    "id": "computo-02",
+    "pregunta": "Una máquina virtual que lleva todo el fin de semana encendida sin que nadie la use…",
+    "opciones": [
+      "Se cobra igual que si hubiera estado trabajando.",
+      "No se cobra, porque Google detecta que está inactiva.",
+      "Se cobra a mitad de precio.",
+      "Se apaga sola a las 24 horas."
+    ],
+    "correcta": 0,
+    "explicacion": "Compute Engine cobra por el tiempo que la máquina está en marcha, por segundo tras un mínimo de un minuto. Una máquina inactiva pero encendida se cobra como tiempo de actividad; solo deja de cobrarse cuando se detiene.",
+    "ancla": "#qué-se-paga-en-una-máquina-virtual"
+  },
+  {
+    "id": "computo-03",
+    "pregunta": "¿Para qué tipo de trabajo tiene sentido una máquina Spot?",
+    "opciones": [
+      "Para la aplicación que atiende a los clientes en horario comercial.",
+      "Para la base de datos principal de la empresa.",
+      "Para procesos por lotes que toleran que Google las apague cuando necesite la capacidad.",
+      "Para cualquier trabajo, porque son iguales a las demás pero más baratas."
+    ],
+    "correcta": 2,
+    "explicacion": "Las máquinas Spot tienen los mayores descuentos a cambio de que Google pueda interrumpirlas. Sirven para trabajos que soportan interrupciones, no para lo que debe estar siempre disponible.",
+    "ancla": "#qué-se-paga-en-una-máquina-virtual"
+  },
+  {
+    "id": "computo-04",
+    "pregunta": "En Cloud Run con facturación por solicitudes, ¿qué se cobra cuando no llega ninguna solicitud?",
+    "opciones": [
+      "La capacidad reservada, como en una máquina virtual.",
+      "Nada: si una instancia no procesa solicitudes, no se cobra, y sin tráfico Google elimina hasta la última instancia.",
+      "Una cuota fija mensual por aplicación.",
+      "Solo el almacenamiento del contenedor."
+    ],
+    "correcta": 1,
+    "explicacion": "En la modalidad por solicitudes, Cloud Run cobra la capacidad mientras atiende peticiones más una tarifa por solicitud. Sin tráfico, las instancias desaparecen y el costo baja a cero, salvo que el equipo haya pedido instancias mínimas siempre listas.",
+    "ancla": "#qué-se-paga-en-cloud-run"
+  },
+  {
+    "id": "computo-05",
+    "pregunta": "¿Cuál es la diferencia de costo entre los modos Autopilot y Standard de GKE?",
+    "opciones": [
+      "Autopilot no tiene cuota de administración de clúster; Standard sí.",
+      "Standard es gratuito hasta cierto tamaño; Autopilot no.",
+      "No hay diferencia: ambos cobran por las máquinas del clúster.",
+      "Autopilot cobra solo por los recursos que piden los contenedores en marcha; Standard cobra por todas las máquinas del clúster, se usen o no."
+    ],
+    "correcta": 3,
+    "explicacion": "La cuota de administración por clúster aplica a los dos modos. La diferencia está en las máquinas: Autopilot paga lo que piden los contenedores; Standard paga todo el clúster aunque esté vacío. Google recomienda Autopilot.",
+    "ancla": "#qué-se-paga-en-gke"
+  }
+]

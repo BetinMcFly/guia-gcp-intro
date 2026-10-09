@@ -775,3 +775,39 @@ dl {
 .retro strong {
   font-weight: 500;
 }
+
+/* ---------- Tablas de contenido ---------- */
+
+.tabla-scroll {
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin: 0 0 1.25em;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+}
+
+.prosa table {
+  border-collapse: collapse;
+  width: 100%;
+  min-width: 36rem;
+  font-size: 0.95rem;
+}
+
+.prosa th,
+.prosa td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--borde);
+}
+
+.prosa th {
+  font-weight: 500;
+  background: var(--superficie);
+  color: var(--secundario);
+  font-size: 0.85rem;
+}
+
+.prosa tr:last-child td {
+  border-bottom: 0;
+}

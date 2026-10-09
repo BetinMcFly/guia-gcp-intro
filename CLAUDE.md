@@ -1,8 +1,8 @@
 # CLAUDE.md — memoria del proyecto
 
 Lee esto antes de tocar nada. Aquí están las decisiones de la entrevista inicial y las
-reglas que **no** se pueden deducir del código. Estado: **CI operativo, diseño hecho, cuestionario implementado, sección 1 escrita y
-publicada; faltan las secciones 2 a 7, la calculadora y el buscador**.
+reglas que **no** se pueden deducir del código. Estado: **CI operativo, diseño hecho, cuestionario implementado, secciones 1 a 3
+escritas y publicadas; faltan las secciones 4 a 7, la calculadora y el buscador**.
 
 ## Qué es este proyecto
 
@@ -124,6 +124,11 @@ opción.** Varía su posición a mano en el JSON; en la primera versión de la s
 lo era en las cinco preguntas y se delataba. Las anclas (`ancla`) apuntan al id que
 `rehype-slug` genera del encabezado: minúsculas, sin puntuación, con acentos
 (`#qué-es-físicamente-google-cloud`). Comprueba los ids en `out/` tras el build.
+
+**Las tablas en MDX necesitan `remark-gfm`** (ya configurado): sin él se renderizan
+como texto con barras, cosa que pasó en la sección 3 y solo se vio en la captura. El
+mapeo `table` de `src/mdx-components.tsx` las envuelve en `.tabla-scroll` para que en
+móvil se desplacen dentro de su marco en vez de desbordar la página.
 
 **Escribe para quien no es técnico.** Antes de usar un término técnico por primera
 vez, defínelo en una frase o enlázalo al glosario. Las analogías valen si son exactas;

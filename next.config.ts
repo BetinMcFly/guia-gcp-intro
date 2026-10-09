@@ -22,7 +22,8 @@ const nextConfig: NextConfig = {
 
 const withMDX = createMDX({
   options: {
-    remarkPlugins: [["remark-frontmatter"], ["remark-mdx-frontmatter"]],
+    // remark-gfm: tablas y otras extensiones de GitHub Flavored Markdown.
+    remarkPlugins: [["remark-frontmatter"], ["remark-mdx-frontmatter"], ["remark-gfm"]],
     // Da un id a cada encabezado para que el cuestionario enlace a la parte exacta.
     rehypePlugins: [["rehype-slug"]],
   },

@@ -1,13 +1,119 @@
 ---
 titulo: "Cómputo: dónde corre el software"
-resumen: "Sección en preparación."
+resumen: "Google Cloud ofrece tres maneras principales de ejecutar software: máquinas virtuales, contenedores orquestados y una plataforma totalmente administrada. Cada una reparte de forma distinta el trabajo entre Google y el equipo propio, y cada una cobra por una cosa diferente."
 orden: 3
 ---
 
-{/* PENDIENTE: contenido redactado para directivos no técnicos, contrastado con
-    https://cloud.google.com/docs. Sin cifras de precio en prosa. Exporta `fuentes`
-    con los enlaces oficiales que respaldan lo dicho. */}
+export const fuentes = [
+  { titulo: "Compute Engine overview (documentación)", url: "https://docs.cloud.google.com/compute/docs/overview" },
+  { titulo: "Compute Engine: VM instance pricing (modelo de facturación y descuentos)", url: "https://cloud.google.com/compute/vm-instance-pricing" },
+  { titulo: "What is Cloud Run (documentación)", url: "https://docs.cloud.google.com/run/docs/overview/what-is-cloud-run" },
+  { titulo: "Cloud Run pricing", url: "https://cloud.google.com/run/pricing" },
+  { titulo: "GKE overview (documentación)", url: "https://docs.cloud.google.com/kubernetes-engine/docs/concepts/kubernetes-engine-overview" },
+  { titulo: "GKE pricing", url: "https://cloud.google.com/kubernetes-engine/pricing" },
+];
 
-export const fuentes = [];
+## Tres maneras de ejecutar software
 
-Esta sección todavía no está escrita.
+Cuando el equipo técnico dice que «despliega» algo, lo está poniendo a correr en
+alguna de estas tres opciones.
+
+- Una [máquina virtual](/glosario/#termino-maquina-virtual) de
+  [Compute Engine](/glosario/#termino-compute-engine). Google la describe como
+  infraestructura como servicio: una máquina completa que el equipo administra por
+  su cuenta, con su sistema operativo y sus discos. Es lo más parecido a tener un
+  servidor propio, con el control y el trabajo que eso implica.
+- Un [contenedor](/glosario/#termino-contenedor) en
+  [GKE](/glosario/#termino-gke). La aplicación se empaqueta en un contenedor y
+  Kubernetes, la plataforma que Google creó y liberó como código abierto, reparte
+  esos contenedores entre máquinas. GKE es la versión de Kubernetes que Google
+  administra, y Google recomienda su modo Autopilot, en el que también administra las
+  máquinas de debajo.
+- [Cloud Run](/glosario/#termino-cloud-run), que Google define como una plataforma
+  totalmente administrada para ejecutar código, funciones o contenedores. El equipo
+  entrega la aplicación y Google se ocupa de todo lo demás, incluido encender más
+  copias cuando llegan solicitudes y apagarlas todas cuando no llega ninguna.
+
+La pregunta útil para la dirección no es cuál es mejor, sino **cuánta operación
+quiere asumir el equipo**. De arriba abajo, la lista va de más control y más trabajo
+a menos control y menos trabajo. Y, como se verá, también cambia por qué se paga.
+
+## Qué se paga en una máquina virtual
+
+Una máquina virtual se cobra por el tiempo que está encendida. Google factura cada
+máquina por segundo, con un mínimo de un minuto, mientras está en marcha. El detalle
+que más dinero cuesta ignorar: **una máquina encendida y sin uso se cobra igual que
+una trabajando**. El sistema solo deja de cobrar cuando la máquina se detiene. Los
+discos se cobran aparte, también mientras existen.
+
+Sobre ese precio base hay tres clases de descuento, que no se combinan entre sí.
+
+- [Descuentos por uso sostenido](/glosario/#termino-descuento-por-uso-sostenido):
+  automáticos, para las máquinas que están encendidas una parte importante del mes.
+  No hay que pedirlos ni comprometerse a nada.
+- [Descuentos por compromiso de uso](/glosario/#termino-descuento-por-compromiso-de-uso):
+  a cambio de comprometerse a un consumo durante uno o tres años, el precio baja de
+  forma sustancial. Son una decisión de presupuesto, y por eso deberían pasar por la
+  dirección.
+- [Máquinas Spot](/glosario/#termino-maquina-spot): las más baratas con diferencia,
+  a cambio de que Google pueda apagarlas cuando necesite la capacidad. Sirven para
+  trabajos que toleran interrupciones, como procesos por lotes; no para lo que atiende
+  clientes.
+
+Los porcentajes exactos de cada descuento cambian y están en la página de precios
+enlazada al pie; la sección 6 explica cómo leerlos.
+
+## Qué se paga en Cloud Run
+
+Cloud Run invierte la lógica: en su modalidad por solicitudes, si una instancia no
+está procesando solicitudes, no se cobra. Se paga la capacidad de cómputo durante el
+tiempo en que la aplicación atiende peticiones, más una tarifa por cada solicitud. Si
+no llega nadie, Google elimina hasta la última instancia y el costo baja a cero.
+
+Existe una segunda modalidad, por instancia, en la que se cobra toda la vida de cada
+instancia, con un mínimo de un minuto, sin tarifa por solicitud. Y si el equipo pide
+mantener un número mínimo de instancias siempre listas para responder rápido, esas
+instancias se cobran aunque estén esperando.
+
+Para quien decide, Cloud Run es la opción en la que **el costo sigue a la demanda**.
+Una aplicación interna que se usa dos horas al día cuesta una fracción de lo que
+costaría en una máquina virtual encendida las veinticuatro.
+
+## Qué se paga en GKE
+
+GKE tiene dos componentes de costo. El primero es una cuota fija de administración
+por cada clúster y hora, independiente de su tamaño; el nivel gratuito de GKE cubre
+con un crédito mensual el equivalente a un clúster por cuenta de facturación. El
+segundo son las máquinas, y aquí la diferencia entre los dos modos es la que importa.
+
+- En modo Autopilot se paga solo por los recursos de cómputo que piden los
+  contenedores que están corriendo, por segundo y sin mínimo.
+- En modo Standard se paga por todas las máquinas del clúster, se usen o no. Las
+  máquinas son de Compute Engine y siguen sus reglas: por segundo, mínimo de un
+  minuto, con descuentos por compromiso disponibles.
+
+Dicho en términos de un edificio: **Standard paga todas las habitaciones; Autopilot
+paga solo las ocupadas**. Google recomienda Autopilot y reserva Standard para quien
+tiene una necesidad concreta de administrar las máquinas a mano.
+
+## Cómo decidir
+
+Una regla práctica, coherente con lo que Google recomienda en su documentación:
+
+| Situación | Opción con la que empezar | Por qué |
+|---|---|---|
+| Aplicación nueva, tráfico variable o bajo | Cloud Run | Costo que sigue a la demanda y nada que operar |
+| Software existente que exige un servidor completo | Máquina virtual | Es lo que ese software espera; se migra sin rehacerlo |
+| Muchos servicios y un equipo con experiencia en Kubernetes | GKE Autopilot | Orquestación sin administrar máquinas |
+
+Lo que conviene exigir en cualquier caso es que cada opción se justifique por la
+carga de trabajo y por el equipo que la va a operar, no por costumbre. Y que las
+máquinas virtuales, si las hay, tengan un motivo para estar encendidas.
+
+## Tres preguntas para la próxima reunión
+
+1. ¿Cuántas máquinas virtuales tenemos encendidas ahora mismo y cuáles no tienen
+   por qué estarlo fuera del horario laboral?
+2. ¿Qué parte de nuestro gasto en cómputo tiene descuento por compromiso, y qué
+   parte podría tenerlo?
+3. Para lo nuevo que estamos construyendo, ¿por qué no Cloud Run?

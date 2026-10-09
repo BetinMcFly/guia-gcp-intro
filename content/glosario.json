@@ -135,5 +135,64 @@
     "termino": "Herencia de permisos",
     "definicion": "Las políticas de permiso concedidas en la organización o en una carpeta se aplican a todo lo que cuelga de ellas. El acceso real a un recurso es la unión de sus políticas directas y las heredadas.",
     "fuente": "https://docs.cloud.google.com/iam/docs/overview"
+  },
+  {
+    "termino": "Máquina virtual",
+    "definicion": "Una máquina completa, con su sistema operativo y sus discos, que corre sobre el hardware de Google y que el equipo administra por su cuenta. Se cobra por el tiempo que está encendida, por segundo tras un mínimo de un minuto.",
+    "fuente": "https://cloud.google.com/compute/vm-instance-pricing",
+    "alias": [
+      "VM",
+      "instancia"
+    ]
+  },
+  {
+    "termino": "Compute Engine",
+    "definicion": "Servicio de Google Cloud que ofrece máquinas virtuales autogestionadas: infraestructura como servicio. Es la opción con más control y más trabajo de administración.",
+    "fuente": "https://docs.cloud.google.com/compute/docs/overview"
+  },
+  {
+    "termino": "Contenedor",
+    "definicion": "Paquete que reúne una aplicación con todo lo que necesita para ejecutarse, de modo que corra igual en cualquier máquina. Es la unidad con la que trabajan GKE y Cloud Run.",
+    "fuente": "https://docs.cloud.google.com/kubernetes-engine/docs/concepts/kubernetes-engine-overview"
+  },
+  {
+    "termino": "GKE",
+    "definicion": "Google Kubernetes Engine: la versión administrada por Google de Kubernetes, la plataforma de código abierto que reparte contenedores entre máquinas. En modo Autopilot, el recomendado, Google administra también las máquinas y se paga solo por los recursos que piden los contenedores.",
+    "fuente": "https://docs.cloud.google.com/kubernetes-engine/docs/concepts/kubernetes-engine-overview",
+    "alias": [
+      "Kubernetes",
+      "Google Kubernetes Engine"
+    ]
+  },
+  {
+    "termino": "Cloud Run",
+    "definicion": "Plataforma totalmente administrada para ejecutar código, funciones o contenedores. Escala según las solicitudes que llegan y, si no llega ninguna, elimina todas las instancias. En su modalidad por solicitudes, sin tráfico no se cobra.",
+    "fuente": "https://docs.cloud.google.com/run/docs/overview/what-is-cloud-run"
+  },
+  {
+    "termino": "Máquina Spot",
+    "definicion": "Máquina virtual con el mayor descuento disponible a cambio de que Google pueda apagarla cuando necesite la capacidad. Apta para trabajos que toleran interrupciones, no para lo que atiende clientes.",
+    "fuente": "https://cloud.google.com/compute/vm-instance-pricing",
+    "alias": [
+      "Spot VM",
+      "VM interrumpible"
+    ]
+  },
+  {
+    "termino": "Descuento por uso sostenido",
+    "definicion": "Descuento automático de Compute Engine para las máquinas que están encendidas una parte importante del mes de facturación. No exige compromiso ni solicitud.",
+    "fuente": "https://cloud.google.com/compute/vm-instance-pricing",
+    "alias": [
+      "sustained use discount"
+    ]
+  },
+  {
+    "termino": "Descuento por compromiso de uso",
+    "definicion": "Precio reducido a cambio de comprometerse a un consumo durante uno o tres años. Aplica a Compute Engine, GKE y Cloud Run, entre otros. Es una decisión de presupuesto.",
+    "fuente": "https://cloud.google.com/compute/vm-instance-pricing",
+    "alias": [
+      "committed use discount",
+      "CUD"
+    ]
   }
 ]
