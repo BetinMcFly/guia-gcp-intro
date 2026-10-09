@@ -1,8 +1,8 @@
 # CLAUDE.md — memoria del proyecto
 
 Lee esto antes de tocar nada. Aquí están las decisiones de la entrevista inicial y las
-reglas que **no** se pueden deducir del código. Estado: **decisiones cerradas, estructura creada, sin lógica ni contenido
-todavía**.
+reglas que **no** se pueden deducir del código. Estado: **decisiones cerradas, estructura creada, CI operativo, sin lógica ni
+contenido todavía**.
 
 ## Qué es este proyecto
 
@@ -132,14 +132,31 @@ Identidad propia, no la del sitio hermano. Criterios fijos:
 - La página debe leerse completa con JavaScript desactivado: la exportación estática
   lo garantiza para el texto; cuestionarios y calculadora son extras, no requisitos.
 
-## Despliegue (cuando se implemente)
+## Despliegue
 
-Mismo patrón que `~/proyectos/claude-code-guide/.github/workflows/`, con dos cambios:
+**Basta con hacer push a `main`**: GitHub Actions comprueba tipos, construye,
+despliega y verifica. Probado de extremo a extremo el 2026-10-09.
 
-1. Un paso de **build** antes de desplegar: `npm ci && npm run build` genera `out/`.
-2. La verificación final compara lo que sirve `https://guia-gcp.albertosolano.dev`
-   contra `out/index.html`, reintentando mientras propaga el CDN (`Cache-Control`
-   de 300 s, igual que el hermano).
+- **`publicar.yml`** — push a `main`: `npm ci`, `npm run typecheck`, `npm run build`,
+  despliegue a `live`, y comparación byte a byte de `https://guia-gcp.albertosolano.dev`
+  contra `out/index.html`, reintentando mientras propaga el CDN (`Cache-Control` 300 s).
+- **`previsualizar.yml`** — cada PR construye y publica un canal temporal de 7 días
+  cuya URL se comenta en el PR; al cerrarlo se borra el canal. PRs desde un fork
+  solo construyen.
+
+Ambos filtran por rutas: tocar solo `CLAUDE.md` o `README.md` no dispara nada.
+
+**La acción de Firebase está fijada a un SHA de commit** (`v0.11.0`), no a la
+etiqueta `v0`: recibe la clave de la service account y una etiqueta mutable es un
+vector de cadena de suministro. Al actualizarla, cambia el SHA y el comentario de
+versión juntos.
+
+Despliegue manual, útil para probar sin commit:
+
+```bash
+npm run build && npm run deploy      # a producción
+npm run build && npm run preview     # a un canal temporal de 7 días
+```
 
 Puesta en marcha (estado al 2026-10-09):
 
@@ -149,9 +166,9 @@ Puesta en marcha (estado al 2026-10-09):
    Cloud DNS; propiedad verificada. El certificado lo emite Firebase solo.
 3. ✅ Repositorio en GitHub con el secreto `FIREBASE_SERVICE_ACCOUNT` cargado.
 4. ✅ Esqueleto de Next.js y `firebase.json` apuntando a `out/` y al sitio.
-5. ✅ Primer despliegue manual hecho el 2026-10-09: 12 páginas vacías en
-   https://guia-gcp-albertosolano.web.app. Los workflows siguen siendo esqueletos:
-   hay que escribir los pasos reales antes de confiar en el push a `main`.
+5. ✅ Primer despliegue manual hecho el 2026-10-09: 12 páginas vacías.
+6. ✅ Workflows reales probados el 2026-10-09: push a `main` publicó y verificó; el
+   PR #1 obtuvo su canal temporal y se borró al cerrarlo.
 
 **Lección del primer build:** con `output: 'export'`, `generateStaticParams` de
 `[seccion]` no puede devolver un arreglo vacío. Por eso `SECCIONES` existe como
