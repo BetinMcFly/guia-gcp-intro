@@ -1,0 +1,16 @@
+{
+  "hosting": {
+    "site": "guia-gcp-albertosolano",
+    "public": "out",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "cleanUrls": true,
+    "headers": [
+      {
+        "source": "**",
+        "headers": [
+          { "key": "Cache-Control", "value": "public, max-age=300, must-revalidate" }
+        ]
+      }
+    ]
+  }
+}

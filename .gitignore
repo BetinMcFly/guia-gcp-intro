@@ -1,0 +1,30 @@
+# Dependencias y salida de build
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# Cache y registros de Firebase
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
+
+# Variables locales (solo .env.example va al repositorio)
+.env
+.env.local
+.env.*.local
+
+# Credenciales que nunca deben entrar al repositorio
+*.json.key
+sa-*.json
+service-account*.json
+
+# Configuración local de Claude Code
+.claude/
+
+# Editores y sistema
+*.swp
+*.swo
+*~
+.DS_Store

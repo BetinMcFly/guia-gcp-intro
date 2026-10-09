@@ -1,0 +1,23 @@
+/*
+ * Estilos globales y tokens de diseño.
+ *
+ * Responsabilidad: definir en :root los tokens de color, tipografía y espaciado,
+ * y sus valores para tema oscuro. Ningún color se escribe en línea en los
+ * componentes; todos salen de aquí. Reglas fijas (CLAUDE.md, sección Diseño):
+ * contraste mínimo 4.5:1 medido, móvil primero, nada desborda a 320px,
+ * todo ítem de grid/flex con contenido que no encoge lleva min-width: 0.
+ */
+
+:root {
+  /* PENDIENTE: tokens de tema claro */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    /* PENDIENTE: tokens de tema oscuro */
+  }
+}
+
+:root[data-theme="dark"] {
+  /* PENDIENTE: tokens de tema oscuro (selección manual) */
+}

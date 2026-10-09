@@ -1,0 +1,35 @@
+# Previsualizar pull request.
+#
+# Responsabilidad: construir cada PR y publicarlo en un canal temporal de Firebase
+# Hosting (7 días) cuya URL se comenta en el propio PR; al cerrar el PR, borrar el
+# canal. Los PRs desde un fork solo se construyen: GitHub no expone secretos a forks.
+#
+# Patrón de referencia: ~/proyectos/claude-code-guide/.github/workflows/previsualizar.yml
+# PENDIENTE: pasos reales. Este esqueleto solo deja el disparador definido.
+
+name: Previsualizar pull request
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, closed]
+
+permissions:
+  contents: read
+  pull-requests: write
+  checks: write
+
+concurrency:
+  group: preview-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  previsualizar:
+    if: github.event.action != 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "PENDIENTE - build y canal temporal"
+  limpiar:
+    if: github.event.action == 'closed'
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "PENDIENTE - borrar canal del PR"

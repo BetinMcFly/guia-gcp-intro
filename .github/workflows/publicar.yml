@@ -1,0 +1,27 @@
+# Publicar en producción.
+#
+# Responsabilidad: al hacer push a `main`, construir el sitio (`npm ci && npm run build`
+# → out/), desplegarlo al canal `live` del sitio guia-gcp-albertosolano con la service
+# account del secreto FIREBASE_SERVICE_ACCOUNT, y después comprobar que lo que sirve
+# https://guia-gcp.albertosolano.dev coincide con out/index.html, reintentando mientras
+# el CDN propaga (Cache-Control de 300 s).
+#
+# Patrón de referencia: ~/proyectos/claude-code-guide/.github/workflows/publicar.yml
+# PENDIENTE: pasos reales. Este esqueleto solo deja el disparador definido.
+
+name: Publicar en producción
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: produccion
+  cancel-in-progress: false
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "PENDIENTE - build, despliegue y verificación"
