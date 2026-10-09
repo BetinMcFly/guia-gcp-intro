@@ -3,21 +3,518 @@
  *
  * Responsabilidad: definir en :root los tokens de color, tipografía y espaciado,
  * y sus valores para tema oscuro. Ningún color se escribe en línea en los
- * componentes; todos salen de aquí. Reglas fijas (CLAUDE.md, sección Diseño):
- * contraste mínimo 4.5:1 medido, móvil primero, nada desborda a 320px,
- * todo ítem de grid/flex con contenido que no encoge lleva min-width: 0.
+ * componentes; todos salen de aquí.
+ *
+ * Reglas fijas (CLAUDE.md, sección Diseño): contraste mínimo 4.5:1 medido,
+ * móvil primero, nada desborda a 320px, todo ítem de grid/flex con contenido que
+ * no encoge lleva min-width: 0.
+ *
+ * La paleta tiene una sola tinta de acento, --costo, y significa «esto es dinero».
+ * No se usa para decorar ni para estados de interfaz: para eso están los neutros.
+ * Contrastes medidos el 2026-10-09: todos los pares texto/fondo ≥ 5.4:1.
  */
 
 :root {
-  /* PENDIENTE: tokens de tema claro */
+  color-scheme: light dark;
+
+  /* Neutros */
+  --papel: #faf9f7;
+  --papel-2: #f1efea;
+  --tinta: #1f2226;
+  --tinta-suave: #5a5f66;
+  --filete: #d9d6d0;
+
+  /* Único acento: dinero */
+  --costo: #7e2a3a;
+  --costo-fondo: #f6e9ec;
+
+  /* Tipografía. Las familias las inyecta next/font como variables. */
+  --titulos: var(--fuente-titulos), "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --texto: var(--fuente-texto), system-ui, "Segoe UI", Roboto, sans-serif;
+  --cuerpo: 1.125rem;
+  --interlineado: 1.6;
+  --medida: 64ch;
+
+  /* Espaciado y layout */
+  --margen: 1rem;
+  --riel: 17rem;
+  --bloque: 2.5rem;
 }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    /* PENDIENTE: tokens de tema oscuro */
+    --papel: #17181b;
+    --papel-2: #1f2126;
+    --tinta: #e8e6e1;
+    --tinta-suave: #a6a49f;
+    --filete: #33363c;
+    --costo: #e39aa8;
+    --costo-fondo: #2a1a1f;
   }
 }
 
 :root[data-theme="dark"] {
-  /* PENDIENTE: tokens de tema oscuro (selección manual) */
+  --papel: #17181b;
+  --papel-2: #1f2126;
+  --tinta: #e8e6e1;
+  --tinta-suave: #a6a49f;
+  --filete: #33363c;
+  --costo: #e39aa8;
+  --costo-fondo: #2a1a1f;
+}
+
+/* ---------- Base ---------- */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 1rem;
+}
+
+body {
+  margin: 0;
+  background: var(--papel);
+  color: var(--tinta);
+  font-family: var(--texto);
+  font-size: var(--cuerpo);
+  line-height: var(--interlineado);
+  font-feature-settings: "kern", "liga";
+}
+
+a {
+  color: inherit;
+  text-decoration-thickness: 0.06em;
+  text-underline-offset: 0.18em;
+}
+
+a:hover {
+  text-decoration-thickness: 0.12em;
+}
+
+:focus-visible {
+  outline: 3px solid var(--tinta);
+  outline-offset: 3px;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--titulos);
+  font-weight: 500;
+  line-height: 1.15;
+  margin: 0;
+  overflow-wrap: anywhere;
+}
+
+p,
+ul,
+ol,
+dl {
+  margin: 0 0 1em;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* ---------- Estructura de página ---------- */
+
+.saltar {
+  position: absolute;
+  left: var(--margen);
+  top: -10rem;
+  padding: 0.5rem 0.75rem;
+  background: var(--tinta);
+  color: var(--papel);
+}
+
+.saltar:focus-visible {
+  top: var(--margen);
+}
+
+.pagina {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "cabecera"
+    "contenido"
+    "riel"
+    "pie";
+  /* Solo la fila de contenido absorbe el alto sobrante; si no, una página
+     corta reparte el hueco entre cabecera, riel y pie. */
+  grid-template-rows: auto 1fr auto auto;
+  min-height: 100dvh;
+  padding: 0 var(--margen);
+}
+
+.cabecera {
+  grid-area: cabecera;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 1rem 0;
+  border-bottom: 1px solid var(--filete);
+  min-width: 0;
+}
+
+.marca {
+  font-family: var(--titulos);
+  font-size: 1.15rem;
+  text-decoration: none;
+  min-width: 0;
+}
+
+.ir-indice {
+  font-size: 0.95rem;
+  color: var(--tinta-suave);
+  white-space: nowrap;
+}
+
+.contenido {
+  grid-area: contenido;
+  max-width: var(--medida);
+  padding: var(--bloque) 0;
+  min-width: 0;
+}
+
+.riel {
+  grid-area: riel;
+  border-top: 1px solid var(--filete);
+  padding: var(--bloque) 0;
+  min-width: 0;
+}
+
+.pie {
+  grid-area: pie;
+  border-top: 1px solid var(--filete);
+  padding: 1.5rem 0 2rem;
+  font-size: 0.9rem;
+  color: var(--tinta-suave);
+  min-width: 0;
+}
+
+.pie p {
+  margin: 0 0 0.4em;
+}
+
+@media (min-width: 56rem) {
+  :root {
+    --margen: 2rem;
+    --bloque: 4rem;
+  }
+
+  .pagina {
+    grid-template-columns: var(--riel) minmax(0, 1fr);
+    grid-template-areas:
+      "cabecera cabecera"
+      "riel contenido"
+      "pie pie";
+    grid-template-rows: auto 1fr auto;
+    column-gap: 4rem;
+    max-width: 76rem;
+    margin: 0 auto;
+  }
+
+  .ir-indice {
+    display: none;
+  }
+
+  .riel {
+    border-top: 0;
+    position: sticky;
+    top: 0;
+    align-self: start;
+    max-height: 100dvh;
+    overflow-y: auto;
+  }
+}
+
+/* ---------- Índice ---------- */
+
+.indice-titulo {
+  font-size: 0.85rem;
+  color: var(--tinta-suave);
+  margin: 0 0 0.6em;
+}
+
+.indice-secciones,
+.indice-herramientas {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.75rem;
+}
+
+.indice-secciones {
+  counter-reset: seccion;
+}
+
+.indice-secciones li,
+.indice-herramientas li {
+  min-width: 0;
+}
+
+.indice-secciones li {
+  counter-increment: seccion;
+  display: grid;
+  grid-template-columns: 1.6rem minmax(0, 1fr);
+  align-items: baseline;
+}
+
+.indice-secciones li::before {
+  content: counter(seccion);
+  font-family: var(--titulos);
+  font-size: 0.95rem;
+  color: var(--tinta-suave);
+  font-variant-numeric: tabular-nums;
+}
+
+.indice a {
+  display: block;
+  padding: 0.3rem 0;
+  text-decoration: none;
+  font-size: 1rem;
+  line-height: 1.35;
+}
+
+.indice a:hover {
+  text-decoration: underline;
+}
+
+.indice a[aria-current="page"] {
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-thickness: 0.12em;
+}
+
+/* ---------- Portada y cabeceras de sección ---------- */
+
+.titular {
+  font-size: clamp(2rem, 1.2rem + 3.6vw, 3.25rem);
+  font-variation-settings: "opsz" 72;
+  letter-spacing: -0.01em;
+  max-width: 22ch;
+  margin-bottom: 0.5em;
+}
+
+.entrada {
+  font-size: 1.3rem;
+  line-height: 1.45;
+  color: var(--tinta-suave);
+  max-width: 44ch;
+  margin-bottom: 2.5rem;
+}
+
+.seccion-orden {
+  font-family: var(--titulos);
+  font-style: italic;
+  color: var(--tinta-suave);
+  margin: 0 0 0.75rem;
+}
+
+.portada section,
+.seccion .prosa,
+.fuentes,
+.siguiente {
+  margin-top: var(--bloque);
+}
+
+.portada h2,
+.prosa h2,
+.fuentes h2 {
+  font-size: 1.6rem;
+  margin-bottom: 0.6em;
+}
+
+.prosa h3 {
+  font-size: 1.25rem;
+  margin: 1.5em 0 0.5em;
+}
+
+.prosa p,
+.prosa li {
+  max-width: var(--medida);
+}
+
+.prosa ul,
+.prosa ol {
+  padding-left: 1.25em;
+}
+
+/* Lista numerada de secciones: el número es información, es el orden de lectura. */
+.lista-secciones {
+  list-style: none;
+  padding: 0;
+  counter-reset: seccion;
+}
+
+.lista-secciones li {
+  counter-increment: seccion;
+  display: grid;
+  grid-template-columns: 2.5rem minmax(0, 1fr);
+  padding: 1rem 0;
+  border-top: 1px solid var(--filete);
+}
+
+/* El número ocupa la primera columna; todo lo demás, la segunda. Sin esto, el
+   resumen cae debajo del número por colocación automática. */
+.lista-secciones li > * {
+  grid-column: 2;
+  min-width: 0;
+}
+
+.lista-secciones li:last-child {
+  border-bottom: 1px solid var(--filete);
+}
+
+.lista-secciones li::before {
+  content: counter(seccion);
+  font-family: var(--titulos);
+  font-size: 1.6rem;
+  line-height: 1.1;
+  color: var(--tinta-suave);
+  font-variant-numeric: tabular-nums;
+}
+
+.lista-secciones a {
+  font-family: var(--titulos);
+  font-size: 1.35rem;
+  line-height: 1.2;
+  text-decoration: none;
+}
+
+.lista-secciones a:hover {
+  text-decoration: underline;
+}
+
+.lista-secciones p,
+.lista-herramientas p {
+  margin: 0.35em 0 0;
+  color: var(--tinta-suave);
+  font-size: 1rem;
+}
+
+.lista-herramientas {
+  list-style: none;
+  padding: 0;
+}
+
+.lista-herramientas li {
+  padding: 1rem 0;
+  border-top: 1px solid var(--filete);
+}
+
+.lista-herramientas li:last-child {
+  border-bottom: 1px solid var(--filete);
+}
+
+.lista-herramientas a {
+  font-family: var(--titulos);
+  font-size: 1.35rem;
+  text-decoration: none;
+}
+
+.lista-herramientas a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Fuentes oficiales y navegación de sección ---------- */
+
+.fuentes {
+  border-top: 1px solid var(--filete);
+  padding-top: 1.5rem;
+  font-size: 1rem;
+}
+
+.fuentes ul {
+  padding-left: 1.25em;
+}
+
+.fuentes li {
+  margin-bottom: 0.4em;
+  overflow-wrap: anywhere;
+}
+
+.siguiente {
+  border-top: 1px solid var(--filete);
+  padding-top: 1.5rem;
+}
+
+.siguiente p {
+  margin: 0 0 0.25em;
+  color: var(--tinta-suave);
+  font-size: 0.95rem;
+}
+
+.siguiente a {
+  font-family: var(--titulos);
+  font-size: 1.5rem;
+  text-decoration: none;
+}
+
+.siguiente a:hover {
+  text-decoration: underline;
+}
+
+/* ---------- Dinero: el único acento ---------- */
+
+.aviso-costo {
+  background: var(--costo-fondo);
+  color: var(--tinta);
+  border-left: 4px solid var(--costo);
+  padding: 1rem 1.25rem;
+  margin: 0 0 var(--bloque);
+  font-size: 1rem;
+}
+
+.aviso-costo p {
+  margin: 0;
+}
+
+.aviso-costo a {
+  color: var(--costo);
+}
+
+/* ---------- Glosario ---------- */
+
+.glosario {
+  margin-top: 1rem;
+}
+
+.glosario-entrada {
+  padding: 1rem 0;
+  border-top: 1px solid var(--filete);
+}
+
+.glosario-entrada:last-child {
+  border-bottom: 1px solid var(--filete);
+}
+
+.glosario dt {
+  font-family: var(--titulos);
+  font-size: 1.35rem;
+  margin-bottom: 0.25em;
+}
+
+.glosario dd {
+  margin: 0;
+  max-width: var(--medida);
+}
+
+.glosario-fuente {
+  color: var(--tinta-suave);
+  font-size: 0.95rem;
+  white-space: nowrap;
+}
+
+.vacio {
+  color: var(--tinta-suave);
+  font-style: italic;
 }

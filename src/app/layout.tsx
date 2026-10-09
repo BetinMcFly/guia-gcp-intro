@@ -2,23 +2,82 @@
  * Layout raíz.
  *
  * Responsabilidad: envolver todas las páginas con el <html lang="es">, los metadatos
- * comunes (título, descripción, URL canónica), la hoja de estilos global y la
- * navegación entre secciones. No contiene contenido de la guía.
+ * comunes, las fuentes autoalojadas (sin peticiones a Google en tiempo de lectura),
+ * la hoja de estilos global, la cabecera y el índice. No contiene contenido de la guía.
  */
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+import { Hanken_Grotesk, Newsreader } from "next/font/google";
+import Link from "next/link";
+import Navegacion from "@/components/Navegacion";
+import { fechaVerificacionPrecios, listarSecciones } from "@/lib/contenido";
 import "./globals.css";
 
+const titulos = Newsreader({
+  subsets: ["latin"],
+  axes: ["opsz"],
+  style: ["normal", "italic"],
+  variable: "--fuente-titulos",
+  display: "swap",
+});
+
+const texto = Hanken_Grotesk({
+  subsets: ["latin"],
+  variable: "--fuente-texto",
+  display: "swap",
+});
+
+const URL_SITIO = process.env.NEXT_PUBLIC_SITE_URL ?? "https://guia-gcp.albertosolano.dev";
+
 export const metadata: Metadata = {
-  title: "Guía de Google Cloud para directivos",
+  metadataBase: new URL(URL_SITIO),
+  title: {
+    default: "Google Cloud para directivos",
+    template: "%s · Google Cloud para directivos",
+  },
   description:
-    "Conceptos y costos de Google Cloud explicados para quien toma decisiones, no para quien administra.",
+    "Conceptos y costos de Google Cloud explicados para quien aprueba el presupuesto, no para quien administra.",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
-  // PENDIENTE: navegación y estructura de página.
+export const viewport: Viewport = {
+  colorScheme: "light dark",
+};
+
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const secciones = await listarSecciones();
+  const fecha = fechaVerificacionPrecios();
   return (
-    <html lang="es">
-      <body>{children}</body>
+    <html lang="es" className={`${titulos.variable} ${texto.variable}`}>
+      <body>
+        <a className="saltar" href="#contenido">
+          Ir al contenido
+        </a>
+        <div className="pagina">
+          <header className="cabecera">
+            <Link href="/" className="marca">
+              Google Cloud para directivos
+            </Link>
+            <a href="#indice" className="ir-indice">
+              Índice
+            </a>
+          </header>
+          <main id="contenido" className="contenido">
+            {children}
+          </main>
+          <aside className="riel">
+            <Navegacion secciones={secciones} />
+          </aside>
+          <footer className="pie">
+            <p>
+              Precios en dólares de lista,{" "}
+              {fecha ? `verificados el ${fecha}` : "pendientes de verificación"}. Sin cookies ni
+              rastreo.
+            </p>
+            <p>
+              <a href="https://github.com/BetinMcFly/guia-gcp-intro">Código y contenido en GitHub</a>
+            </p>
+          </footer>
+        </div>
+      </body>
     </html>
   );
 }

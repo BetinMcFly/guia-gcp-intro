@@ -1,8 +1,8 @@
 # CLAUDE.md — memoria del proyecto
 
 Lee esto antes de tocar nada. Aquí están las decisiones de la entrevista inicial y las
-reglas que **no** se pueden deducir del código. Estado: **decisiones cerradas, estructura creada, CI operativo, sin lógica ni
-contenido todavía**.
+reglas que **no** se pueden deducir del código. Estado: **decisiones cerradas, CI operativo, diseño y estructura de página hechos;
+faltan los componentes interactivos y el contenido**.
 
 ## Qué es este proyecto
 
@@ -71,12 +71,15 @@ guia-gcp-intro/
 │   ├── publicar.yml          # push a main → build → deploy live → verificar
 │   └── previsualizar.yml     # PR → build → canal temporal 7d; al cerrar, borrar canal
 ├── src/app/                  # App Router: layout, portada, [seccion]/, glosario/, calculadora/, not-found
+├── src/mdx-components.tsx    # mapeo de elementos MDX (Next lo exige con este nombre)
+├── src/tipos/mdx.d.ts        # lo que exporta cada módulo MDX: frontmatter y fuentes
 ├── src/components/           # Navegacion, Cuestionario, Calculadora, Glosario, Buscador, Fuente
 ├── src/lib/                  # contenido.ts (única lectura de content/), precios.ts, indice-busqueda.ts
 └── content/
     ├── README.md             # esquema de cada archivo de contenido y lista de secciones
     ├── secciones/*.mdx       # 7 secciones: introduccion, organizacion, computo, almacenamiento,
-    │                         #   redes, facturacion, control-de-gasto; fuentes al pie
+    │                         #   redes, facturacion, control-de-gasto. Front matter: titulo,
+    │                         #   resumen, orden. Exportan `fuentes` (lista de {titulo, url})
     ├── cuestionarios/*.json  # preguntas, opción correcta, explicación, enlace a sección
     ├── glosario.json         # término, definición breve, fuente oficial
     └── precios.json          # precios de lista USD + fecha_verificacion + url de origen
@@ -122,7 +125,42 @@ una analogía que simplifica hasta ser falsa es peor que la definición seca.
 
 ## Diseño
 
-Identidad propia, no la del sitio hermano. Criterios fijos:
+Identidad propia, no la del sitio hermano (que usa papel azulado, verde pino,
+mostaza, Archivo y Literata). Implementado el 2026-10-09 en `src/app/globals.css`.
+
+**La idea:** un informe para la dirección, no un sitio de documentación. Mucho
+margen, texto grande (18 px, medida de 64 caracteres), una sola tinta de acento y
+numeración únicamente donde hay un orden real.
+
+| Token | Claro | Oscuro | Significa |
+|---|---|---|---|
+| `--papel` / `--papel-2` | `#FAF9F7` / `#F1EFEA` | `#17181B` / `#1F2126` | fondo y fondo de bloques |
+| `--tinta` / `--tinta-suave` | `#1F2226` / `#5A5F66` | `#E8E6E1` / `#A6A49F` | texto y texto secundario |
+| `--filete` | `#D9D6D0` | `#33363C` | líneas de 1 px, nunca texto |
+| `--costo` / `--costo-fondo` | `#7E2A3A` / `#F6E9EC` | `#E39AA8` / `#2A1A1F` | **solo dinero**: avisos de precio, calculadora |
+
+Contrastes medidos: todos los pares texto/fondo ≥ 5.4:1. `--costo` no se usa para
+decorar ni para estados de interfaz; para eso están los neutros.
+
+**Tipografía:** Newsreader (títulos, con eje óptico) y Hanken Grotesk (texto),
+autoalojadas con `next/font/google`: se descargan en build y el sitio no hace
+ninguna petición a Google en tiempo de lectura, coherente con «sin rastreo».
+
+**Estructura:** en escritorio (≥ 56 rem), riel izquierdo fijo con el índice y columna
+de lectura. En móvil, la cabecera enlaza con «Índice» al índice que vive al pie, y
+cada sección termina con el enlace a la siguiente. Sin JavaScript todo sigue
+funcionando; `Navegacion` solo lo usa para marcar la entrada activa.
+
+**El número de sección es información, no decoración:** las siete secciones se
+leen en orden. No numerar nada que no sea una secuencia.
+
+**Dos trampas ya caídas:** (1) en una cuadrícula con `::before` como primera
+columna, cualquier hijo adicional cae en la columna 1 por colocación automática; por
+eso `.lista-secciones li > *` fija `grid-column: 2`. (2) Con `min-height: 100dvh`,
+una página corta reparte el hueco entre todas las filas de la cuadrícula; por eso
+`.pagina` fija `grid-template-rows` con un único `1fr`.
+
+Criterios fijos:
 
 - Tipografía de lectura, mucho aire, pocos colores y cada uno con significado.
 - Tema claro y oscuro con tokens en `:root`; ningún color escrito en línea.

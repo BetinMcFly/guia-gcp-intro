@@ -20,7 +20,9 @@
     "@next/mdx": "^16.4.0",
     "next": "^16.4.0",
     "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+    "react-dom": "^19.3.0",
+    "remark-frontmatter": "^5.0.0",
+    "remark-mdx-frontmatter": "^6.0.0"
   },
   "devDependencies": {
     "@types/mdx": "^2.0.14",

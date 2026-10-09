@@ -6,6 +6,9 @@
  * - trailingSlash: true     → cada ruta sale como `carpeta/index.html`, compatible con cleanUrls.
  * - images.unoptimized      → obligatorio sin servidor de imágenes.
  * - pageExtensions con mdx  → las secciones de content/ se escriben en MDX.
+ * - remark-frontmatter + remark-mdx-frontmatter → el front matter YAML de cada
+ *   sección se exporta como `frontmatter` desde el módulo MDX. Los plugins van
+ *   por nombre (string) porque Turbopack no serializa funciones.
  */
 import type { NextConfig } from "next";
 import createMDX from "@next/mdx";
@@ -17,6 +20,10 @@ const nextConfig: NextConfig = {
   pageExtensions: ["ts", "tsx", "md", "mdx"],
 };
 
-const withMDX = createMDX({});
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: [["remark-frontmatter"], ["remark-mdx-frontmatter"]],
+  },
+});
 
 export default withMDX(nextConfig);
