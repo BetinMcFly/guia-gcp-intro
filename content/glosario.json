@@ -3,7 +3,10 @@
     "termino": "Computación en la nube",
     "definicion": "Disponibilidad bajo demanda de recursos informáticos, como almacenamiento e infraestructura, ofrecidos como servicios a través de internet. La empresa no administra máquinas físicas y paga solo por lo que usa.",
     "fuente": "https://cloud.google.com/learn/what-is-cloud-computing",
-    "alias": ["nube", "cloud"]
+    "alias": [
+      "nube",
+      "cloud"
+    ]
   },
   {
     "termino": "Región",
@@ -19,19 +22,25 @@
     "termino": "IaaS",
     "definicion": "Infraestructura como servicio. Acceso bajo demanda a cómputo, almacenamiento, red y virtualización. Es el modelo con más control y el que más trabajo de administración deja al equipo propio.",
     "fuente": "https://cloud.google.com/learn/what-is-cloud-computing",
-    "alias": ["infraestructura como servicio"]
+    "alias": [
+      "infraestructura como servicio"
+    ]
   },
   {
     "termino": "PaaS",
     "definicion": "Plataforma como servicio. Todo lo necesario para desarrollar y ejecutar aplicaciones sin administrar la infraestructura que hay debajo.",
     "fuente": "https://cloud.google.com/learn/what-is-cloud-computing",
-    "alias": ["plataforma como servicio"]
+    "alias": [
+      "plataforma como servicio"
+    ]
   },
   {
     "termino": "SaaS",
     "definicion": "Software como servicio. Una aplicación completa entregada como servicio, con la infraestructura, el mantenimiento y las actualizaciones incluidos.",
     "fuente": "https://cloud.google.com/learn/what-is-cloud-computing",
-    "alias": ["software como servicio"]
+    "alias": [
+      "software como servicio"
+    ]
   },
   {
     "termino": "Responsabilidad compartida",
@@ -42,24 +51,89 @@
     "termino": "Pago por uso",
     "definicion": "Modelo de precios de Google Cloud: se paga por los servicios consumidos, sin cuotas iniciales ni cargos por cancelación. Sobre él se aplican descuentos por uso sostenido y por compromiso.",
     "fuente": "https://cloud.google.com/pricing",
-    "alias": ["pay as you go"]
+    "alias": [
+      "pay as you go"
+    ]
   },
   {
     "termino": "Nivel gratuito",
     "definicion": "Uso sin costo de ciertos productos de Google Cloud hasta un límite mensual. No tiene fecha de fin, pero Google puede cambiar la oferta. Al superar el límite se cobra el exceso a tarifa normal.",
     "fuente": "https://docs.cloud.google.com/free/docs/free-cloud-features",
-    "alias": ["free tier"]
+    "alias": [
+      "free tier"
+    ]
   },
   {
     "termino": "Prueba gratuita",
     "definicion": "Programa para clientes nuevos con un crédito de bienvenida y un plazo limitado. Durante la prueba no se factura nada y la cuenta no pasa sola a ser de pago al terminar.",
     "fuente": "https://docs.cloud.google.com/free/docs/free-cloud-features",
-    "alias": ["free trial"]
+    "alias": [
+      "free trial"
+    ]
   },
   {
     "termino": "Consola",
     "definicion": "Interfaz web de Google Cloud desde la que el equipo técnico administra proyectos y recursos. También existen una línea de comandos y bibliotecas para programar contra los servicios.",
     "fuente": "https://docs.cloud.google.com/docs/overview",
-    "alias": ["Google Cloud console"]
+    "alias": [
+      "Google Cloud console"
+    ]
+  },
+  {
+    "termino": "Organización",
+    "definicion": "Recurso raíz de la jerarquía de Google Cloud; representa a la empresa y es el padre de todas las carpetas y proyectos. Exige una cuenta de Google Workspace o de Cloud Identity. Con él, los proyectos pertenecen a la empresa y no a quien los creó.",
+    "fuente": "https://docs.cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy",
+    "alias": [
+      "recurso de organización"
+    ]
+  },
+  {
+    "termino": "Carpeta",
+    "definicion": "Agrupación opcional entre la organización y los proyectos, por ejemplo por departamento o por entorno. Permite aislar y delegar la administración de un grupo de proyectos.",
+    "fuente": "https://docs.cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy"
+  },
+  {
+    "termino": "Proyecto",
+    "definicion": "Unidad básica de Google Cloud: todo servicio se crea y se usa dentro de un proyecto, y en él se administran la facturación y los permisos. Tiene un identificador único y un número asignado por Google.",
+    "fuente": "https://docs.cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy"
+  },
+  {
+    "termino": "Cuenta de facturación",
+    "definicion": "Recurso que define quién paga por un conjunto de proyectos. Un proyecto se vincula a una cuenta; una cuenta puede pagar varios proyectos. Sin cuenta activa, los servicios del proyecto no se pueden usar. Vincularla no transmite permisos.",
+    "fuente": "https://docs.cloud.google.com/billing/docs/concepts",
+    "alias": [
+      "Cloud Billing account"
+    ]
+  },
+  {
+    "termino": "IAM",
+    "definicion": "Gestión de identidades y accesos: la herramienta de Google Cloud para administrar autorizaciones detalladas, es decir, quién puede hacer qué sobre qué recurso.",
+    "fuente": "https://docs.cloud.google.com/iam/docs/overview",
+    "alias": [
+      "Identity and Access Management"
+    ]
+  },
+  {
+    "termino": "Principal",
+    "definicion": "Identidad que pide hacer algo en Google Cloud: una cuenta de Google de una persona, un grupo de Google o una cuenta de servicio, entre otras.",
+    "fuente": "https://docs.cloud.google.com/iam/docs/overview"
+  },
+  {
+    "termino": "Rol",
+    "definicion": "Conjunto de permisos. Los permisos siempre se conceden a través de un rol. Hay roles básicos (muy permisivos, solo para pruebas), predefinidos (mantenidos por Google) y personalizados (con los permisos que la empresa decida).",
+    "fuente": "https://docs.cloud.google.com/iam/docs/overview"
+  },
+  {
+    "termino": "Cuenta de servicio",
+    "definicion": "Identidad que usa un programa o una carga de trabajo en lugar de una persona. Google recomienda limitar sus privilegios y evitar sus claves cuando haya otra opción.",
+    "fuente": "https://docs.cloud.google.com/iam/docs/using-iam-securely",
+    "alias": [
+      "service account"
+    ]
+  },
+  {
+    "termino": "Herencia de permisos",
+    "definicion": "Las políticas de permiso concedidas en la organización o en una carpeta se aplican a todo lo que cuelga de ellas. El acceso real a un recurso es la unión de sus políticas directas y las heredadas.",
+    "fuente": "https://docs.cloud.google.com/iam/docs/overview"
   }
 ]

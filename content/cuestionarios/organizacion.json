@@ -1,1 +1,67 @@
-[]
+[
+  {
+    "id": "organizacion-01",
+    "pregunta": "¿A quién pertenecen los proyectos de una empresa que tiene recurso de organización?",
+    "opciones": [
+      "Al empleado que los creó, mientras siga en la empresa.",
+      "A la organización, no a la persona que los creó.",
+      "A la cuenta de facturación que los paga.",
+      "A Google, que los cede en uso."
+    ],
+    "correcta": 1,
+    "explicacion": "Google indica que los proyectos pertenecen a la organización, no al empleado que los creó. Para eso la empresa necesita el recurso de organización, que exige Google Workspace o Cloud Identity.",
+    "ancla": "#todo-cuelga-de-la-organización"
+  },
+  {
+    "id": "organizacion-02",
+    "pregunta": "¿Qué pasa con un proyecto que no está vinculado a una cuenta de facturación activa?",
+    "opciones": [
+      "Funciona igual, pero sin descuentos.",
+      "Pasa automáticamente a la cuenta de facturación de la organización.",
+      "Hereda los permisos de la última cuenta a la que estuvo vinculado.",
+      "No se pueden usar sus servicios."
+    ],
+    "correcta": 3,
+    "explicacion": "Sin una cuenta de facturación activa y válida, los productos de Google Cloud del proyecto no se pueden usar. Además, vincular un proyecto a una cuenta de facturación no le transmite permisos.",
+    "ancla": "#quién-paga-la-cuenta-de-facturación"
+  },
+  {
+    "id": "organizacion-03",
+    "pregunta": "En IAM, ¿cómo se conceden los permisos a una persona o a un programa?",
+    "opciones": [
+      "Siempre a través de un rol, que es un conjunto de permisos.",
+      "Permiso a permiso, uno por uno.",
+      "Mediante la cuenta de facturación del proyecto.",
+      "Solo mediante los roles básicos de propietario, editor y lector."
+    ],
+    "correcta": 0,
+    "explicacion": "Los permisos no se dan sueltos: un rol es un conjunto de permisos y la política de permiso une un principal con un rol sobre un recurso. Los roles básicos son muy permisivos y Google los desaconseja en producción.",
+    "ancla": "#quién-puede-hacer-qué-iam"
+  },
+  {
+    "id": "organizacion-04",
+    "pregunta": "Si se concede un rol en el nivel de la organización, ¿sobre qué se aplica?",
+    "opciones": [
+      "Solo sobre la propia organización, no sobre los proyectos.",
+      "Sobre los proyectos que el administrador elija después.",
+      "Sobre todas las carpetas y proyectos que cuelgan de ella.",
+      "Sobre nada hasta que se repita en cada proyecto."
+    ],
+    "correcta": 2,
+    "explicacion": "Las políticas se heredan hacia abajo: un rol concedido en la organización se aplica a todo lo que hay debajo. Por eso un permiso a ese nivel es una llave de toda la casa.",
+    "ancla": "#los-permisos-bajan-nunca-suben"
+  },
+  {
+    "id": "organizacion-05",
+    "pregunta": "¿Cuál de estas prácticas coincide con las recomendaciones de Google para usar IAM con seguridad?",
+    "opciones": [
+      "Conceder roles básicos en producción para simplificar la administración.",
+      "Dar los roles a grupos, en el ámbito más pequeño que sirva, y revisar los registros de auditoría.",
+      "Dar los roles a cada persona por separado para saber quién tiene qué.",
+      "Conceder todos los roles en la organización para no repetir trabajo."
+    ],
+    "correcta": 1,
+    "explicacion": "Google recomienda no usar roles básicos en producción salvo sin alternativa, conceder cada rol en el ámbito más pequeño, darlos a grupos en vez de a personas, limitar las cuentas de servicio y auditar los cambios con los registros de auditoría.",
+    "ancla": "#cinco-reglas-que-google-recomienda"
+  }
+]

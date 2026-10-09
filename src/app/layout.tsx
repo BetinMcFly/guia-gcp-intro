@@ -87,9 +87,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               {fecha ? `verificados el ${fecha}` : "pendientes de verificación"}. Sin cookies ni
               rastreo; el tema elegido se recuerda en este navegador.
             </p>
-            <p>
-              <a href="https://github.com/BetinMcFly/guia-gcp-intro">Código y contenido en GitHub</a>
-            </p>
           </footer>
         </div>
       </body>

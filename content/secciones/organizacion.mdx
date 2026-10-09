@@ -1,13 +1,119 @@
 ---
 titulo: "Cómo se organiza: proyectos y permisos"
-resumen: "Sección en preparación."
+resumen: "Todo lo que la empresa usa en Google Cloud vive dentro de un proyecto, cada proyecto tiene quien lo paga y quien puede tocarlo, y los permisos que se dan arriba bajan a todo lo que hay debajo. Entender esa estructura es entender dónde se decide el gasto y el riesgo."
 orden: 2
 ---
 
-{/* PENDIENTE: contenido redactado para directivos no técnicos, contrastado con
-    https://cloud.google.com/docs. Sin cifras de precio en prosa. Exporta `fuentes`
-    con los enlaces oficiales que respaldan lo dicho. */}
+export const fuentes = [
+  { titulo: "Resource hierarchy (documentación de Resource Manager)", url: "https://docs.cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy" },
+  { titulo: "IAM overview (documentación)", url: "https://docs.cloud.google.com/iam/docs/overview" },
+  { titulo: "Cloud Billing concepts (documentación)", url: "https://docs.cloud.google.com/billing/docs/concepts" },
+  { titulo: "Using IAM securely (documentación)", url: "https://docs.cloud.google.com/iam/docs/using-iam-securely" },
+];
 
-export const fuentes = [];
+## Todo cuelga de la organización
 
-Esta sección todavía no está escrita.
+Google Cloud ordena lo que una empresa contrata en una jerarquía de tres niveles.
+Arriba está el recurso de [organización](/glosario/#termino-organizacion), que
+representa a la empresa y es el padre de todo lo demás. Debajo, de forma opcional,
+hay [carpetas](/glosario/#termino-carpeta), que sirven para agrupar, por ejemplo por
+departamento o por entorno, y para delegar la administración de cada grupo. Y en el
+último nivel están los [proyectos](/glosario/#termino-proyecto), que contienen los
+recursos reales: las máquinas, los datos, las aplicaciones.
+
+Cada elemento tiene exactamente un padre. Esa regla, que parece un detalle técnico,
+es lo que permite que la estructura se lea como un organigrama: cualquier recurso se
+puede rastrear hacia arriba hasta la organización.
+
+Un dato que conviene que la dirección conozca: Google indica que los proyectos
+pertenecen a la organización, no al empleado que los creó. Para que eso sea así, la
+empresa necesita tener el recurso de organización, que exige una cuenta de Google
+Workspace o de Cloud Identity. Sin él, los proyectos los crean personas con cuentas
+personales y la empresa no tiene un nodo desde el que gobernarlos.
+
+## El proyecto es la unidad de decisión
+
+Google es explícito: hace falta un proyecto para usar Google Cloud. El proyecto es
+esencial para crear, habilitar y usar cualquier servicio, y en él se administran las
+interfaces de programación, la facturación y los permisos. Cada proyecto tiene un
+identificador único, elegido al crearlo, y un número asignado por Google.
+
+Para quien decide, el proyecto es la unidad natural de tres cosas: **qué se está
+construyendo, cuánto cuesta y quién puede tocarlo**. Un proyecto bien nombrado
+responde las tres preguntas de un vistazo; una cuenta llena de proyectos con nombres
+de prueba no responde ninguna. Pedir la lista de proyectos de la empresa, con su
+propósito y su responsable, es una de las peticiones más útiles que puede hacer un
+directivo.
+
+## Quién paga: la cuenta de facturación
+
+El dinero entra por otra pieza, la
+[cuenta de facturación](/glosario/#termino-cuenta-de-facturacion). Google la define
+como el recurso que establece quién paga por un conjunto de recursos. Cada proyecto se
+vincula a una cuenta de facturación, y una misma cuenta puede pagar varios proyectos,
+incluso de otra organización. Si un proyecto no está vinculado a una cuenta activa,
+sus servicios no se pueden usar.
+
+Hay dos tipos de cuenta: la de autoservicio, que se abre en línea y se paga con
+tarjeta o débito, y la facturada, con factura y transferencia, para la que hay que
+cumplir requisitos. Y un matiz importante: vincular un proyecto a una cuenta de
+facturación no le transmite permisos. Quién paga y quién puede administrar son dos
+decisiones separadas, y conviene que lo sigan siendo.
+
+## Quién puede hacer qué: IAM
+
+El control de acceso se llama [IAM](/glosario/#termino-iam), siglas en inglés de
+gestión de identidades y accesos. Google lo describe como la herramienta para
+administrar autorizaciones detalladas. Funciona con tres piezas.
+
+- Un [principal](/glosario/#termino-principal) es quien pide hacer algo: una cuenta de
+  Google de una persona, un grupo de Google, o una
+  [cuenta de servicio](/glosario/#termino-cuenta-de-servicio), que es la identidad
+  que usa un programa en lugar de una persona.
+- Un [rol](/glosario/#termino-rol) es un conjunto de permisos. Los permisos no se dan
+  sueltos; siempre se dan a través de un rol. Hay roles básicos, que Google describe
+  como muy permisivos y útiles para pruebas pero no para producción; roles
+  predefinidos, que Google mantiene para cada servicio; y roles personalizados, con
+  solo los permisos que la empresa decida.
+- Una política de permiso une las dos cosas: dice qué principal tiene qué rol sobre
+  qué recurso.
+
+La traducción para la dirección: cuando alguien pregunta «¿quién puede borrar los
+datos de clientes?», la respuesta es una lista de principales con un rol que lo
+permita sobre el proyecto donde están esos datos. Esa lista existe y se puede pedir.
+
+## Los permisos bajan, nunca suben
+
+Las políticas se [heredan](/glosario/#termino-herencia-de-permisos) hacia abajo por
+la jerarquía. Un rol concedido en una carpeta se aplica a todos los proyectos y
+carpetas que contiene; uno concedido en la organización, a todo. Google explica que
+el acceso real a un recurso es la unión de las políticas puestas directamente sobre
+él y de las heredadas de sus ancestros.
+
+La consecuencia: **un permiso dado a nivel de organización es una llave de toda la
+casa**. Por eso la pregunta no es solo quién tiene permisos, sino a qué altura los
+tiene. Y por eso las carpetas importan: permiten dar permisos amplios sobre una parte
+de la empresa sin abrir el resto.
+
+## Cinco reglas que Google recomienda
+
+Google publica sus propias recomendaciones para usar IAM con seguridad. Las cinco que
+un directivo puede exigir sin entrar en detalle técnico:
+
+1. En producción, no conceder roles básicos salvo que no haya alternativa.
+2. Conceder cada rol en el ámbito más pequeño que sirva: en el proyecto, no en la
+   organización, si con el proyecto basta.
+3. Dar los roles a grupos, no a personas sueltas. Quien entra o sale de la empresa
+   entra o sale del grupo, y los permisos se mantienen ordenados.
+4. Limitar los privilegios de las cuentas de servicio y evitar sus claves cuando
+   exista otra opción.
+5. Revisar periódicamente quién puede cambiar las políticas de permisos, con los
+   registros de auditoría que Google conserva, y exportarlos si hay que guardarlos a
+   largo plazo.
+
+## Tres preguntas para la próxima reunión
+
+1. ¿Tenemos un recurso de organización, y quién tiene roles concedidos a ese nivel?
+2. ¿Cómo están agrupados nuestros proyectos, cuántos hay y cuáles pagan de la misma
+   cuenta de facturación?
+3. ¿Cuándo se revisaron por última vez los permisos y quién puede cambiarlos?
