@@ -26,11 +26,11 @@ escrita para esta audiencia.
 | Stack | Next.js + React + TypeScript | Elegido por el propietario para la interactividad |
 | Modo Next.js | **Exportación estática** (`output: 'export'`) | Sale una carpeta `out/` que Hosting sirve desde CDN. Sin servidor, sin rutas API, sin SSR |
 | Interactividad | Cuestionarios, calculadora de costos, glosario con búsqueda, fuentes oficiales | Todo corre en el navegador |
-| Progreso del lector | **No se guarda** | Nada en localStorage, nada en servidor |
+| Progreso del lector | **No se guarda** | Nada en localStorage, nada en servidor. Única excepción: la clave `tema` (claro/oscuro), que es una comodidad del lector y el pie lo dice |
 | Acceso | Pública, sin autenticación | Lo más simple; Firebase Hosting no restringe acceso por sí solo |
 | Precios | Tabla fija en USD con fecha de verificación | Google cambia precios; la fecha visible y el aviso evitan publicar cifras como si fueran actuales |
 | Contenido | Claude redacta, contrastado con docs oficiales, el propietario aprueba | Tema que cambia a menudo; la verificación es obligatoria |
-| Diseño | Propio, sobrio, ejecutivo, claro/oscuro, móvil primero | No hereda la estética de claude-code-guide |
+| Diseño | Cercano a Google Cloud (paleta de Google, Roboto, Material), con botón de tema claro/oscuro | Cambio pedido por el propietario el 2026-10-09 tras ver la primera versión, que era una identidad propia sobria. Sin logotipos ni marcas de Google; el pie declara que la guía es independiente |
 | Cuestionarios | Retroalimentación inmediata, sin persistir | Al recargar se reinician; nada se envía |
 | Despliegue | GitHub Actions, mismo patrón que claude-code-guide | Push a `main` publica; cada PR obtiene una URL temporal |
 
@@ -73,7 +73,7 @@ guia-gcp-intro/
 ├── src/app/                  # App Router: layout, portada, [seccion]/, glosario/, calculadora/, not-found
 ├── src/mdx-components.tsx    # mapeo de elementos MDX (Next lo exige con este nombre)
 ├── src/tipos/mdx.d.ts        # lo que exporta cada módulo MDX: frontmatter y fuentes
-├── src/components/           # Navegacion, Cuestionario, Calculadora, Glosario, Buscador, Fuente
+├── src/components/           # Navegacion, TemaToggle, Cuestionario, Calculadora, Glosario, Buscador, Fuente
 ├── src/lib/                  # contenido.ts (única lectura de content/), precios.ts, indice-busqueda.ts
 └── content/
     ├── README.md             # esquema de cada archivo de contenido y lista de secciones
@@ -142,45 +142,58 @@ una analogía que simplifica hasta ser falsa es peor que la definición seca.
 
 ## Diseño
 
-Identidad propia, no la del sitio hermano (que usa papel azulado, verde pino,
-mostaza, Archivo y Literata). Implementado el 2026-10-09 en `src/app/globals.css`.
+Línea visual **cercana a Google Cloud**, decidida por el propietario el 2026-10-09 y
+implementada en `src/app/globals.css`. Antes hubo una identidad propia (Newsreader,
+papel neutro, acento burdeos) que se descartó; no volver a ella.
 
-**La idea:** un informe para la dirección, no un sitio de documentación. Mucho
-margen, texto grande (18 px, medida de 64 caracteres), una sola tinta de acento y
-numeración únicamente donde hay un orden real.
+**Qué se toma de Google y qué no.** Se toma la paleta (azul 600/700, grises
+900/700/300, verde 800), Roboto autoalojada con `next/font` y el lenguaje de
+Material: barra superior fija, riel con la entrada activa en píldora, tarjetas
+delineadas de 8 px, botones en píldora, enlaces azules sin subrayar hasta el hover.
+**No se usan logotipos ni marcas de Google.** La marca del sitio son cuatro puntos
+de colores propios del CSS, no un logotipo, y el pie declara que la guía es
+independiente y que Google Cloud es marca de Google LLC. Esa línea entre «parecerse
+a» y «hacerse pasar por» no se cruza.
 
 | Token | Claro | Oscuro | Significa |
 |---|---|---|---|
-| `--papel` / `--papel-2` | `#FAF9F7` / `#F1EFEA` | `#17181B` / `#1F2126` | fondo y fondo de bloques |
-| `--tinta` / `--tinta-suave` | `#1F2226` / `#5A5F66` | `#E8E6E1` / `#A6A49F` | texto y texto secundario |
-| `--filete` | `#D9D6D0` | `#33363C` | líneas de 1 px, nunca texto |
-| `--costo` / `--costo-fondo` | `#7E2A3A` / `#F6E9EC` | `#E39AA8` / `#2A1A1F` | **solo dinero**: avisos de precio, calculadora |
+| `--fondo` / `--superficie` | `#FFFFFF` / `#F8F9FA` | `#202124` / `#303134` | fondo y fondo de bloques |
+| `--texto` / `--secundario` | `#202124` / `#5F6368` | `#E8EAED` / `#9AA0A6` | texto y texto secundario |
+| `--borde` | `#DADCE0` | `#3C4043` | líneas de 1 px, nunca texto |
+| `--primario` / `--primario-contenedor` | `#1967D2` / `#E8F0FE` | `#8AB4F8` / `#394457` | **lo interactivo**: enlaces, entrada activa, acierto del cuestionario |
+| `--primario-boton` | `#1A73E8` | `#8AB4F8` | fondo de botones rellenos |
+| `--dinero` / `--dinero-contenedor` | `#137333` / `#E6F4EA` | `#81C995` / `#1E3A2B` | **solo dinero**: avisos de precio, calculadora |
 
-Contrastes medidos: todos los pares texto/fondo ≥ 5.4:1. `--costo` no se usa para
-decorar ni para estados de interfaz; para eso están los neutros.
+Contrastes medidos: todos los pares en uso ≥ 4.5:1. Dos que fallan y por eso no se
+usan: texto secundario sobre `--primario-contenedor` en oscuro (3.7:1) y el verde 600
+de Google (`#188038`) sobre su contenedor (4.4:1), por eso el texto de dinero es el
+verde 800.
 
-**Tipografía:** Newsreader (títulos, con eje óptico) y Hanken Grotesk (texto),
-autoalojadas con `next/font/google`: se descargan en build y el sitio no hace
-ninguna petición a Google en tiempo de lectura, coherente con «sin rastreo».
+**Botón de tema** (`TemaToggle`): alterna `data-theme` en `<html>`, guarda la
+elección en `localStorage` bajo la clave `tema` y un guion en línea en el `<head>` la
+aplica antes del primer pintado para que no haya parpadeo. Sin elección guardada manda
+`prefers-color-scheme`. Probado en navegador el 2026-10-09: cambio, recarga y vuelta.
 
-**Estructura:** en escritorio (≥ 56 rem), riel izquierdo fijo con el índice y columna
-de lectura. En móvil, la cabecera enlaza con «Índice» al índice que vive al pie, y
-cada sección termina con el enlace a la siguiente. Sin JavaScript todo sigue
-funcionando; `Navegacion` solo lo usa para marcar la entrada activa.
+**Estructura:** barra superior fija de 4 rem; en escritorio (≥ 56 rem), riel
+izquierdo fijo con el índice y columna de lectura de 68 caracteres. En móvil, la barra
+enlaza con «Índice» al índice que vive al pie, y cada sección termina con una tarjeta
+hacia la siguiente. Sin JavaScript todo sigue funcionando salvo el botón de tema y el
+cuestionario; `Navegacion` solo lo usa para marcar la entrada activa.
 
 **El número de sección es información, no decoración:** las siete secciones se
 leen en orden. No numerar nada que no sea una secuencia.
 
 **Dos trampas ya caídas:** (1) en una cuadrícula con `::before` como primera
 columna, cualquier hijo adicional cae en la columna 1 por colocación automática; por
-eso `.lista-secciones li > *` fija `grid-column: 2`. (2) Con `min-height: 100dvh`,
-una página corta reparte el hueco entre todas las filas de la cuadrícula; por eso
-`.pagina` fija `grid-template-rows` con un único `1fr`.
+eso `.lista-secciones li > *` fija `grid-column: 2`. (2) Con `min-height`, una página
+corta reparte el hueco entre todas las filas de la cuadrícula; por eso `.pagina` fija
+`grid-template-rows` con un único `1fr`.
 
 Criterios fijos:
 
 - Tipografía de lectura, mucho aire, pocos colores y cada uno con significado.
-- Tema claro y oscuro con tokens en `:root`; ningún color escrito en línea.
+- Tema claro y oscuro con tokens en `:root`; ningún color escrito en línea salvo los
+  cuatro puntos de la marca, que son decorativos y no llevan texto.
 - Móvil primero: todo ítem de grid o flex con contenido que no encoge lleva
   `min-width: 0`; nada desborda a 320px.
 - Contraste mínimo 4.5:1 en todo texto, medido, no estimado.
