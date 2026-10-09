@@ -156,6 +156,7 @@ Despliegue manual, útil para probar sin commit:
 ```bash
 npm run build && npm run deploy      # a producción
 npm run build && npm run preview     # a un canal temporal de 7 días
+firebase hosting:channel:delete <canal> --site guia-gcp-albertosolano --force   # borrar uno a mano
 ```
 
 Puesta en marcha (estado al 2026-10-09):
@@ -167,8 +168,16 @@ Puesta en marcha (estado al 2026-10-09):
 3. ✅ Repositorio en GitHub con el secreto `FIREBASE_SERVICE_ACCOUNT` cargado.
 4. ✅ Esqueleto de Next.js y `firebase.json` apuntando a `out/` y al sitio.
 5. ✅ Primer despliegue manual hecho el 2026-10-09: 12 páginas vacías.
-6. ✅ Workflows reales probados el 2026-10-09: push a `main` publicó y verificó; el
-   PR #1 obtuvo su canal temporal y se borró al cerrarlo.
+6. ✅ Workflows reales probados el 2026-10-09: push a `main` publicó y verificó. El
+   PR #1 obtuvo su canal temporal pero el borrado falló (ver abajo); el PR #2 probó
+   el ciclo completo ya corregido: canal creado, comentado y borrado al cerrar.
+
+**Lección del borrado de canales:** `firebase hosting:channel:delete` **ignora el
+`site` de `firebase.json`** y apunta al sitio por defecto del proyecto
+(`claude-projects-496723`), que no es el nuestro: devuelve un 404 engañoso. Hay que
+pasar `--site guia-gcp-albertosolano` siempre, en CI y a mano. Además, el shell de
+Actions corre con `-e`: un comando que falla aborta el script antes de imprimir su
+salida, así que captura el código con `|| CODIGO=$?` si quieres leer el motivo.
 
 **Lección del primer build:** con `output: 'export'`, `generateStaticParams` de
 `[seccion]` no puede devolver un arreglo vacío. Por eso `SECCIONES` existe como
