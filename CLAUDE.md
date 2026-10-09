@@ -47,10 +47,11 @@ Confirmado por el propietario el 2026-10-09, además de la tabla:
 | Proyecto GCP / Firebase | `claude-projects-496723` (número 857913674434) |
 | Zona de Cloud DNS | `albertosolano-dev` (`albertosolano.dev.`), en el mismo proyecto |
 | Subdominio | `guia-gcp.albertosolano.dev` |
-| Sitio de Firebase Hosting | `guia-gcp-albertosolano` → `https://guia-gcp-albertosolano.web.app` |
-| Registro DNS | CNAME `guia-gcp.albertosolano.dev.` → `guia-gcp-albertosolano.web.app.` (TTL 300). Firebase pedirá además un TXT `_acme-challenge.guia-gcp` para emitir el certificado |
+| Sitio de Firebase Hosting | `guia-gcp-albertosolano` → `https://guia-gcp-albertosolano.web.app` (creado 2026-10-09) |
+| Registro DNS | CNAME `guia-gcp.albertosolano.dev.` → `guia-gcp-albertosolano.web.app.` (TTL 300, creado 2026-10-09). Firebase verificó la propiedad solo con el CNAME; no pidió TXT `_acme-challenge` |
 | Certificado | Gestionado por Firebase, renovación automática |
-| Despliegue desde CI | Service account `github-actions-deploy@claude-projects-496723.iam.gserviceaccount.com` (ya existe, con `firebasehosting.admin` y `firebase.viewer`); su clave va solo como secreto `FIREBASE_SERVICE_ACCOUNT` del repositorio |
+| Despliegue desde CI | Service account `github-actions-deploy@claude-projects-496723.iam.gserviceaccount.com` (con `firebasehosting.admin` y `firebase.viewer`). Clave propia de este repositorio, id `684c9069…`, creada 2026-10-09 y cargada solo como secreto `FIREBASE_SERVICE_ACCOUNT` en GitHub; el archivo local se destruyó al momento. La clave `0794fa44…` es la de claude-code-guide |
+| Repositorio | https://github.com/BetinMcFly/guia-gcp-intro (público), rama `main`, remoto `origin` por SSH |
 | Herramientas locales | Node 24, npm 11, Firebase CLI 15.26 en `~/.local/bin`, gcloud autenticado como el propietario |
 
 Los sitios hermanos siguen el mismo patrón y sirven de referencia: `pca-albertosolano`
@@ -140,16 +141,16 @@ Mismo patrón que `~/proyectos/claude-code-guide/.github/workflows/`, con dos ca
    contra `out/index.html`, reintentando mientras propaga el CDN (`Cache-Control`
    de 300 s, igual que el hermano).
 
-Orden de puesta en marcha, cada paso reversible y ninguno hecho aún:
+Puesta en marcha (estado al 2026-10-09):
 
-1. `firebase hosting:sites:create guia-gcp-albertosolano --project claude-projects-496723`
-2. Añadir el dominio personalizado en la consola de Firebase; crear en Cloud DNS el
-   CNAME y el TXT `_acme-challenge` que pida.
-3. Crear el repositorio en GitHub y cargar `FIREBASE_SERVICE_ACCOUNT` (misma clave
-   que usa claude-code-guide, o una nueva para la misma service account).
-4. Scaffold de Next.js con exportación estática; `firebase.json` apuntando a `out/`
-   y al sitio `guia-gcp-albertosolano`.
-5. Primer despliegue manual para validar; después, todo por push a `main`.
+1. ✅ Sitio `guia-gcp-albertosolano` creado.
+2. ✅ Dominio personalizado dado de alta por la API REST de Hosting (la CLI no tiene
+   comando para ello; hace falta la cabecera `x-goog-user-project`). CNAME creado en
+   Cloud DNS; propiedad verificada. El certificado lo emite Firebase solo.
+3. ✅ Repositorio en GitHub con el secreto `FIREBASE_SERVICE_ACCOUNT` cargado.
+4. ✅ Esqueleto de Next.js y `firebase.json` apuntando a `out/` y al sitio.
+5. ⬜ Primer despliegue manual para validar; después, todo por push a `main`.
+   Los workflows siguen siendo esqueletos: hay que escribir los pasos reales.
 
 `firebase hosting:rollback` **no existe** en el CLI 15.26. Marcha atrás: consola de
 Firebase (historial de versiones), `firebase hosting:clone`, o revertir en git.
