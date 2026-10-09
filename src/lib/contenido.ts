@@ -41,6 +41,17 @@ export interface TerminoGlosario {
   alias?: string[];
 }
 
+export interface Pregunta {
+  id: string;
+  pregunta: string;
+  opciones: string[];
+  /** Índice de la opción correcta dentro de `opciones`. */
+  correcta: number;
+  explicacion: string;
+  /** Ancla (#id de encabezado) de la parte de la sección que lo explica. */
+  ancla: string;
+}
+
 export interface ModuloSeccion {
   default: ComponentType;
   frontmatter: Metadatos;
@@ -64,6 +75,11 @@ export async function listarSecciones(): Promise<ResumenSeccion[]> {
   return modulos
     .map((m, i) => ({ slug: SECCIONES[i], ...m.frontmatter }))
     .sort((a, b) => a.orden - b.orden);
+}
+
+export async function cargarCuestionario(slug: Seccion): Promise<Pregunta[]> {
+  const modulo = await import(`../../content/cuestionarios/${slug}.json`);
+  return modulo.default as Pregunta[];
 }
 
 export function listarGlosario(): TerminoGlosario[] {

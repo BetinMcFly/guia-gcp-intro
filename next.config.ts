@@ -23,6 +23,8 @@ const nextConfig: NextConfig = {
 const withMDX = createMDX({
   options: {
     remarkPlugins: [["remark-frontmatter"], ["remark-mdx-frontmatter"]],
+    // Da un id a cada encabezado para que el cuestionario enlace a la parte exacta.
+    rehypePlugins: [["rehype-slug"]],
   },
 });
 

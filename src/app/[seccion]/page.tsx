@@ -11,7 +11,13 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Cuestionario from "@/components/Cuestionario";
 import Fuente from "@/components/Fuente";
-import { cargarSeccion, esSeccion, listarSecciones, SECCIONES } from "@/lib/contenido";
+import {
+  cargarCuestionario,
+  cargarSeccion,
+  esSeccion,
+  listarSecciones,
+  SECCIONES,
+} from "@/lib/contenido";
 
 type Params = { seccion: string };
 
@@ -30,9 +36,10 @@ export default async function Seccion({ params }: { params: Promise<Params> }) {
   const { seccion } = await params;
   if (!esSeccion(seccion)) notFound();
 
-  const [{ default: Contenido, frontmatter, fuentes }, todas] = await Promise.all([
+  const [{ default: Contenido, frontmatter, fuentes }, todas, preguntas] = await Promise.all([
     cargarSeccion(seccion),
     listarSecciones(),
+    cargarCuestionario(seccion),
   ]);
   const posicion = todas.findIndex((s) => s.slug === seccion);
   const siguiente = todas[posicion + 1];
@@ -51,7 +58,7 @@ export default async function Seccion({ params }: { params: Promise<Params> }) {
         <Contenido />
       </div>
 
-      <Cuestionario />
+      <Cuestionario preguntas={preguntas} />
 
       <Fuente fuentes={fuentes} />
 

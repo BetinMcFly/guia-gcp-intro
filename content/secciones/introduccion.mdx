@@ -1,13 +1,117 @@
 ---
 titulo: "Qué es Google Cloud y por qué importa"
-resumen: "Sección en preparación."
+resumen: "La nube es alquilar capacidad informática por uso en lugar de comprar máquinas. Google Cloud es la versión de Google de ese alquiler, y entenderla cambia cómo se decide sobre tecnología y presupuesto."
 orden: 1
 ---
 
-{/* PENDIENTE: contenido redactado para directivos no técnicos, contrastado con
-    https://cloud.google.com/docs. Sin cifras de precio en prosa. Exporta `fuentes`
-    con los enlaces oficiales que respaldan lo dicho. */}
+export const fuentes = [
+  { titulo: "What is cloud computing? (Google Cloud)", url: "https://cloud.google.com/learn/what-is-cloud-computing" },
+  { titulo: "Google Cloud overview (documentación)", url: "https://docs.cloud.google.com/docs/overview" },
+  { titulo: "Geography and regions (documentación)", url: "https://docs.cloud.google.com/docs/geography-and-regions" },
+  { titulo: "Shared responsibility and shared fate on Google Cloud", url: "https://docs.cloud.google.com/architecture/framework/security/shared-responsibility-shared-fate" },
+  { titulo: "Google Cloud pricing", url: "https://cloud.google.com/pricing" },
+  { titulo: "Free cloud features and trial offer", url: "https://docs.cloud.google.com/free/docs/free-cloud-features" },
+];
 
-export const fuentes = [];
+## La nube, en una frase
 
-Esta sección todavía no está escrita.
+Google define la [computación en la nube](/glosario/#termino-computacion-en-la-nube)
+como la disponibilidad bajo demanda de recursos informáticos, como almacenamiento e
+infraestructura, ofrecidos como servicios a través de internet. La empresa deja de
+comprar y mantener máquinas propias y pasa a usar capacidad ajena que se enciende y
+se apaga según la necesita, pagando solo por lo que usa.
+
+La comparación con la electricidad es exacta en lo que importa: nadie construye una
+central para encender la oficina. Se contrata el suministro y se paga el consumo. La
+diferencia con la nube es que el consumo lo deciden, cada día, las personas del
+equipo técnico, y eso convierte la factura en una variable de gestión.
+
+## Qué es, físicamente, Google Cloud
+
+Google Cloud es un conjunto de máquinas físicas en centros de datos de Google. Esas
+máquinas están organizadas en [regiones](/glosario/#termino-region) y
+[zonas](/glosario/#termino-zona). Una región es un área geográfica independiente;
+una zona es un área de despliegue dentro de una región y se considera un único
+dominio de fallo: si algo falla en una zona, las demás de la misma región siguen
+funcionando. Cada región tiene tres o más zonas, y hay regiones en Asia, Australia,
+Europa, África, Oriente Medio, Norteamérica y Sudamérica.
+
+Para la dirección, esto se traduce en una decisión que conviene tomar a conciencia:
+**dónde van a vivir los datos y las aplicaciones de la empresa**. Google indica que
+la ubicación se elige según los requisitos de latencia (el tiempo que tarda un
+servicio en responder desde donde está el usuario), disponibilidad y durabilidad,
+y que la localización de los datos se rige por las condiciones del servicio. Si el
+negocio tiene obligaciones legales sobre dónde pueden guardarse ciertos datos, esa
+pregunta tiene que hacerse antes de que el equipo técnico elija una región por
+costumbre.
+
+## Tres formas de contratar: infraestructura, plataforma o software
+
+No todo lo que se contrata en la nube es igual. Google distingue tres modelos de
+servicio, y la diferencia entre ellos es cuánto administra el proveedor y cuánto
+queda en manos de la empresa.
+
+- [Infraestructura como servicio](/glosario/#termino-iaas): acceso bajo demanda a
+  cómputo, almacenamiento y red. Es el modelo con más control, y el que más se parece
+  a tener las máquinas en casa. También el que más trabajo deja al equipo propio.
+- [Plataforma como servicio](/glosario/#termino-paas): todo lo necesario para
+  desarrollar y ejecutar aplicaciones sin administrar la infraestructura que hay
+  debajo. El equipo se concentra en la aplicación.
+- [Software como servicio](/glosario/#termino-saas): una aplicación completa, lista
+  para usar, con la infraestructura, el mantenimiento y las actualizaciones incluidos.
+
+La regla para quien decide: cuanto más arriba se contrata, menos equipo técnico
+propio hace falta y menos control se tiene. El precio de cada modelo se compara mal
+si se mira solo la factura de Google; hay que ponerle al lado las horas de personal
+que cada uno exige.
+
+## Quién responde de qué
+
+Google describe la seguridad en la nube como una
+[responsabilidad compartida](/glosario/#termino-responsabilidad-compartida). El
+proveedor responde siempre por la red y la infraestructura subyacentes. El cliente
+responde siempre por sus políticas de acceso y por sus datos. Lo que hay entre medio
+se reparte según el modelo: en infraestructura como servicio, el grueso de la
+seguridad es del cliente; en software como servicio, el grueso es de Google.
+
+La consecuencia para la dirección es sencilla y a menudo se olvida: **contratar la
+nube no transfiere la responsabilidad sobre los datos**. Quién puede acceder a qué,
+y qué se hace con la información de los clientes, sigue siendo una decisión de la
+empresa y, si sale mal, su problema.
+
+## Cómo se paga
+
+El modelo es [pago por uso](/glosario/#termino-pago-por-uso): se paga por los
+servicios que se consumen, sin cuotas iniciales ni cargos por cancelación. Sobre esa
+base existen descuentos, unos automáticos por uso sostenido a lo largo del mes y otros
+a cambio de comprometerse a un uso durante un plazo. Las cifras concretas cambian
+con el tiempo; las secciones 6 y 7 explican cómo funcionan y dónde consultarlas.
+
+Dos programas conviene conocer por su nombre. El
+[nivel gratuito](/glosario/#termino-nivel-gratuito) permite usar ciertos productos sin
+costo hasta un límite mensual y no tiene fecha de fin. La
+[prueba gratuita](/glosario/#termino-prueba-gratuita) da a los clientes nuevos un
+crédito con plazo limitado; durante la prueba no se cobra nada y, al terminar, la
+cuenta no pasa sola a ser de pago. Ninguno de los dos sirve para operar un negocio,
+pero sí para que el equipo experimente sin pedir presupuesto.
+
+Lo que importa retener: **la factura de la nube es variable por diseño**. Eso es una
+ventaja cuando el negocio crece o se contrae, y un riesgo cuando nadie la mira. Google
+ofrece presupuestos, alertas y límites de cuota para controlarla; la sección 7 está
+dedicada a eso.
+
+## Cómo se maneja
+
+El equipo técnico trabaja con Google Cloud desde una
+[consola](/glosario/#termino-consola) web, desde la línea de comandos, mediante
+interfaces de programación y con herramientas que describen la infraestructura en
+archivos de texto para poder repetirla. Un directivo no necesita tocar nada de esto. Sí conviene saber que la consola existe
+y que en ella se ven los proyectos y los recursos que la empresa está pagando, porque
+es el lugar al que pedir que le muestren la factura.
+
+## Tres preguntas para la próxima reunión
+
+1. ¿En qué región están nuestros datos y nuestras aplicaciones, y por qué esa?
+2. De lo que usamos, ¿qué es infraestructura, qué es plataforma y qué es software, y
+   quién responde de la seguridad en cada caso?
+3. ¿Qué descuentos aplican hoy a nuestra factura y cuáles estamos dejando pasar?

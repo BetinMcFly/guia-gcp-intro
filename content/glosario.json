@@ -1,1 +1,65 @@
-[]
+[
+  {
+    "termino": "Computación en la nube",
+    "definicion": "Disponibilidad bajo demanda de recursos informáticos, como almacenamiento e infraestructura, ofrecidos como servicios a través de internet. La empresa no administra máquinas físicas y paga solo por lo que usa.",
+    "fuente": "https://cloud.google.com/learn/what-is-cloud-computing",
+    "alias": ["nube", "cloud"]
+  },
+  {
+    "termino": "Región",
+    "definicion": "Área geográfica independiente de Google Cloud, formada por tres o más zonas. Dónde se elige una región determina la latencia, la disponibilidad y bajo qué condiciones se guardan los datos.",
+    "fuente": "https://docs.cloud.google.com/docs/geography-and-regions"
+  },
+  {
+    "termino": "Zona",
+    "definicion": "Área de despliegue dentro de una región. Se considera un único dominio de fallo: un problema en una zona no afecta a las otras zonas de la misma región.",
+    "fuente": "https://docs.cloud.google.com/docs/geography-and-regions"
+  },
+  {
+    "termino": "IaaS",
+    "definicion": "Infraestructura como servicio. Acceso bajo demanda a cómputo, almacenamiento, red y virtualización. Es el modelo con más control y el que más trabajo de administración deja al equipo propio.",
+    "fuente": "https://cloud.google.com/learn/what-is-cloud-computing",
+    "alias": ["infraestructura como servicio"]
+  },
+  {
+    "termino": "PaaS",
+    "definicion": "Plataforma como servicio. Todo lo necesario para desarrollar y ejecutar aplicaciones sin administrar la infraestructura que hay debajo.",
+    "fuente": "https://cloud.google.com/learn/what-is-cloud-computing",
+    "alias": ["plataforma como servicio"]
+  },
+  {
+    "termino": "SaaS",
+    "definicion": "Software como servicio. Una aplicación completa entregada como servicio, con la infraestructura, el mantenimiento y las actualizaciones incluidos.",
+    "fuente": "https://cloud.google.com/learn/what-is-cloud-computing",
+    "alias": ["software como servicio"]
+  },
+  {
+    "termino": "Responsabilidad compartida",
+    "definicion": "Reparto de las tareas de seguridad entre Google y el cliente. Google responde siempre por la red y la infraestructura; el cliente, siempre por sus políticas de acceso y sus datos. Lo demás depende del modelo de servicio.",
+    "fuente": "https://docs.cloud.google.com/architecture/framework/security/shared-responsibility-shared-fate"
+  },
+  {
+    "termino": "Pago por uso",
+    "definicion": "Modelo de precios de Google Cloud: se paga por los servicios consumidos, sin cuotas iniciales ni cargos por cancelación. Sobre él se aplican descuentos por uso sostenido y por compromiso.",
+    "fuente": "https://cloud.google.com/pricing",
+    "alias": ["pay as you go"]
+  },
+  {
+    "termino": "Nivel gratuito",
+    "definicion": "Uso sin costo de ciertos productos de Google Cloud hasta un límite mensual. No tiene fecha de fin, pero Google puede cambiar la oferta. Al superar el límite se cobra el exceso a tarifa normal.",
+    "fuente": "https://docs.cloud.google.com/free/docs/free-cloud-features",
+    "alias": ["free tier"]
+  },
+  {
+    "termino": "Prueba gratuita",
+    "definicion": "Programa para clientes nuevos con un crédito de bienvenida y un plazo limitado. Durante la prueba no se factura nada y la cuenta no pasa sola a ser de pago al terminar.",
+    "fuente": "https://docs.cloud.google.com/free/docs/free-cloud-features",
+    "alias": ["free trial"]
+  },
+  {
+    "termino": "Consola",
+    "definicion": "Interfaz web de Google Cloud desde la que el equipo técnico administra proyectos y recursos. También existen una línea de comandos y bibliotecas para programar contra los servicios.",
+    "fuente": "https://docs.cloud.google.com/docs/overview",
+    "alias": ["Google Cloud console"]
+  }
+]

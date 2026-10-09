@@ -1,1 +1,67 @@
-[]
+[
+  {
+    "id": "introduccion-01",
+    "pregunta": "¿Qué cambia, en esencia, cuando una empresa pasa de tener máquinas propias a usar la nube?",
+    "opciones": [
+      "Compra las mismas máquinas, pero instaladas en un centro de datos de Google.",
+      "Contrata a Google para que administre las máquinas que ya tiene en su oficina.",
+      "Deja de comprar y mantener máquinas y pasa a usar capacidad ajena, pagando por lo que consume.",
+      "Obtiene un precio fijo mensual independiente del uso."
+    ],
+    "correcta": 2,
+    "explicacion": "Google define la nube como la disponibilidad bajo demanda de recursos informáticos como servicios a través de internet, pagando solo por lo que se usa. No se compran máquinas ni hay un precio fijo.",
+    "ancla": "#la-nube-en-una-frase"
+  },
+  {
+    "id": "introduccion-02",
+    "pregunta": "Una zona de Google Cloud es…",
+    "opciones": [
+      "Un país en el que Google tiene oficinas comerciales.",
+      "Un área de despliegue dentro de una región, que se considera un único dominio de fallo.",
+      "Un grupo de regiones que comparten la misma factura.",
+      "Una red privada que une los centros de datos de un cliente."
+    ],
+    "correcta": 1,
+    "explicacion": "Una región es un área geográfica independiente formada por tres o más zonas; cada zona es un área de despliegue dentro de la región y un único dominio de fallo.",
+    "ancla": "#qué-es-físicamente-google-cloud"
+  },
+  {
+    "id": "introduccion-03",
+    "pregunta": "¿Cuál de estas afirmaciones sobre los modelos de servicio es correcta?",
+    "opciones": [
+      "Infraestructura como servicio es el modelo que menos trabajo deja al equipo propio.",
+      "Software como servicio exige administrar la infraestructura que hay debajo.",
+      "Los tres modelos cuestan lo mismo si se mide solo la factura de Google.",
+      "Cuanto más arriba se contrata (de infraestructura a software), menos equipo técnico propio hace falta y menos control se tiene."
+    ],
+    "correcta": 3,
+    "explicacion": "Infraestructura como servicio da el mayor control y el mayor trabajo; software como servicio entrega la aplicación completa con infraestructura y mantenimiento incluidos. Comparar solo la factura ignora las horas de personal.",
+    "ancla": "#tres-formas-de-contratar-infraestructura-plataforma-o-software"
+  },
+  {
+    "id": "introduccion-04",
+    "pregunta": "Según el modelo de responsabilidad compartida, ¿de qué responde siempre el cliente?",
+    "opciones": [
+      "De sus políticas de acceso y de sus datos.",
+      "De la red y la infraestructura física de Google.",
+      "De nada: al contratar la nube, la seguridad pasa a ser de Google.",
+      "Solo de la factura."
+    ],
+    "correcta": 0,
+    "explicacion": "Google responde siempre por la red y la infraestructura subyacentes; el cliente responde siempre por sus políticas de acceso y por sus datos. Contratar la nube no transfiere esa responsabilidad.",
+    "ancla": "#quién-responde-de-qué"
+  },
+  {
+    "id": "introduccion-05",
+    "pregunta": "¿Qué ocurre al terminar la prueba gratuita para clientes nuevos?",
+    "opciones": [
+      "Se cobra automáticamente todo lo consumido durante la prueba.",
+      "La cuenta pasa a ser de pago sin avisar.",
+      "La cuenta no pasa sola a ser de pago; durante la prueba no se cobra nada.",
+      "Se pierde el acceso al nivel gratuito para siempre."
+    ],
+    "correcta": 2,
+    "explicacion": "Durante la prueba no se factura ningún uso y la cuenta solo pasa a ser de pago si el cliente la actualiza. El nivel gratuito es un programa aparte, con límites mensuales y sin fecha de fin.",
+    "ancla": "#cómo-se-paga"
+  }
+]

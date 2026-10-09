@@ -518,3 +518,111 @@ dl {
   color: var(--tinta-suave);
   font-style: italic;
 }
+
+/* ---------- Cuestionario ---------- */
+
+.cuestionario {
+  margin-top: var(--bloque);
+  border-top: 1px solid var(--filete);
+  padding-top: 1.5rem;
+}
+
+.cuestionario h2 {
+  font-size: 1.6rem;
+  margin-bottom: 0.3em;
+}
+
+.cuestionario-nota {
+  color: var(--tinta-suave);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.preguntas {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  counter-reset: pregunta;
+}
+
+.pregunta {
+  counter-increment: pregunta;
+  padding: 1.25rem 0;
+  border-top: 1px solid var(--filete);
+  min-width: 0;
+}
+
+.pregunta-texto {
+  font-family: var(--titulos);
+  font-size: 1.3rem;
+  line-height: 1.3;
+  margin-bottom: 0.75rem;
+}
+
+.pregunta-texto::before {
+  content: counter(pregunta) ". ";
+  color: var(--tinta-suave);
+}
+
+.opciones {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.opciones li {
+  min-width: 0;
+}
+
+.opcion {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1.45;
+  color: var(--tinta);
+  background: var(--papel-2);
+  border: 1px solid var(--filete);
+  border-radius: 0.25rem;
+  padding: 0.7rem 0.9rem;
+  cursor: pointer;
+}
+
+.opcion:hover:not(:disabled) {
+  border-color: var(--tinta-suave);
+}
+
+.opcion:disabled {
+  cursor: default;
+  color: var(--tinta-suave);
+}
+
+/* Acierto y fallo se marcan con la tinta y con un texto explícito, no con color:
+   --costo significa dinero y no se presta para estados de interfaz. */
+.opcion.correcta {
+  color: var(--tinta);
+  border: 2px solid var(--tinta);
+  padding: calc(0.7rem - 1px) calc(0.9rem - 1px);
+}
+
+.opcion.incorrecta {
+  text-decoration: line-through;
+}
+
+.retro {
+  min-height: 0;
+}
+
+.retro p {
+  margin: 0.9rem 0 0;
+  font-size: 1rem;
+}
+
+.retro strong {
+  font-family: var(--titulos);
+  font-size: 1.1rem;
+  font-weight: 500;
+}

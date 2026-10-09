@@ -1,8 +1,8 @@
 # CLAUDE.md — memoria del proyecto
 
 Lee esto antes de tocar nada. Aquí están las decisiones de la entrevista inicial y las
-reglas que **no** se pueden deducir del código. Estado: **decisiones cerradas, CI operativo, diseño y estructura de página hechos;
-faltan los componentes interactivos y el contenido**.
+reglas que **no** se pueden deducir del código. Estado: **CI operativo, diseño hecho, cuestionario implementado, sección 1 escrita y
+publicada; faltan las secciones 2 a 7, la calculadora y el buscador**.
 
 ## Qué es este proyecto
 
@@ -107,6 +107,23 @@ Cada respuesta muestra si es correcta, por qué, y enlaza a la sección que lo e
 
 **El glosario y la búsqueda se resuelven en el navegador** con un índice generado en
 build. Sin servicios externos de búsqueda.
+
+**Cómo se verifican las fuentes (aprendido con la sección 1, 2026-10-09).** La
+documentación vive en `docs.cloud.google.com` (las URL `cloud.google.com/docs/...`
+redirigen con 301; enlaza la definitiva). Las páginas de marketing
+(`cloud.google.com/pricing`, `/learn/...`) pesan más de 2 MB y WebFetch las devuelve
+truncadas: descárgalas con `curl -A "Mozilla/5.0"`, quita etiquetas y busca las frases
+clave. Toda afirmación de la sección 1 salió de seis páginas; están en su `fuentes`.
+
+**Las cifras de promociones y descuentos tampoco van en prosa** (crédito de la
+prueba gratuita, plazo, porcentaje máximo de descuento): cambian igual que los
+precios. Se dice que existen y se enlaza.
+
+**En los cuestionarios, la respuesta correcta no puede ser siempre la primera
+opción.** Varía su posición a mano en el JSON; en la primera versión de la sección 1
+lo era en las cinco preguntas y se delataba. Las anclas (`ancla`) apuntan al id que
+`rehype-slug` genera del encabezado: minúsculas, sin puntuación, con acentos
+(`#qué-es-físicamente-google-cloud`). Comprueba los ids en `out/` tras el build.
 
 **Escribe para quien no es técnico.** Antes de usar un término técnico por primera
 vez, defínelo en una frase o enlázalo al glosario. Las analogías valen si son exactas;
