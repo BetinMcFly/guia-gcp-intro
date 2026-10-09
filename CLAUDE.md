@@ -1,8 +1,8 @@
 # CLAUDE.md — memoria del proyecto
 
 Lee esto antes de tocar nada. Aquí están las decisiones de la entrevista inicial y las
-reglas que **no** se pueden deducir del código. Estado: **CI operativo, diseño hecho, cuestionario implementado, secciones 1 a 3
-escritas y publicadas; faltan las secciones 4 a 7, la calculadora y el buscador**.
+reglas que **no** se pueden deducir del código. Estado: **CI operativo, diseño hecho, cuestionario implementado, secciones 1 a 4
+escritas y publicadas; faltan las secciones 5 a 7, la calculadora y el buscador**.
 
 ## Qué es este proyecto
 

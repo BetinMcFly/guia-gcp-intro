@@ -1,13 +1,116 @@
 ---
 titulo: "Almacenamiento y bases de datos"
-resumen: "Sección en preparación."
+resumen: "Los datos se cobran por el espacio que ocupan, cada mes, estén usándose o no. Google Cloud ofrece distintos sitios donde guardarlos según cómo se vayan a usar, y cada uno cobra por una combinación distinta de espacio, operaciones y lectura."
 orden: 4
 ---
 
-{/* PENDIENTE: contenido redactado para directivos no técnicos, contrastado con
-    https://cloud.google.com/docs. Sin cifras de precio en prosa. Exporta `fuentes`
-    con los enlaces oficiales que respaldan lo dicho. */}
+export const fuentes = [
+  { titulo: "Cloud Storage: product overview (documentación)", url: "https://docs.cloud.google.com/storage/docs/introduction" },
+  { titulo: "Cloud Storage: storage classes (documentación)", url: "https://docs.cloud.google.com/storage/docs/storage-classes" },
+  { titulo: "Cloud Storage pricing (componentes del precio)", url: "https://cloud.google.com/storage/pricing" },
+  { titulo: "Compute Engine: storage options (documentación)", url: "https://docs.cloud.google.com/compute/docs/disks" },
+  { titulo: "Cloud SQL overview (documentación)", url: "https://docs.cloud.google.com/sql/docs/introduction" },
+  { titulo: "BigQuery overview (documentación)", url: "https://docs.cloud.google.com/bigquery/docs/introduction" },
+  { titulo: "BigQuery pricing (modelos de cómputo y almacenamiento)", url: "https://cloud.google.com/bigquery/pricing" },
+];
 
-export const fuentes = [];
+## Los datos cuestan aunque nadie los use
 
-Esta sección todavía no está escrita.
+El cómputo de la sección anterior se paga mientras algo corre. Los datos siguen otra
+lógica: **se cobran por el espacio que ocupan, mes a mes, desde que se guardan hasta
+que se borran**. Una aplicación apagada deja de costar; sus datos, no. Por eso el
+gasto en almacenamiento tiende a crecer en silencio y es el primer sitio donde mirar
+cuando una factura sube sin que nadie haya lanzado nada nuevo.
+
+Google Cloud ofrece varios lugares donde guardar datos. Los cuatro que aparecen en
+casi cualquier empresa son estos.
+
+## Archivos y objetos: Cloud Storage
+
+[Cloud Storage](/glosario/#termino-cloud-storage) es el servicio para guardar archivos
+de cualquier tipo y tamaño: documentos, imágenes, copias de seguridad, registros.
+Google lo describe como almacenamiento de objetos, duradero y disponible globalmente.
+Los archivos se guardan como objetos dentro de
+[buckets](/glosario/#termino-bucket), que son los contenedores que crea cada proyecto.
+
+La decisión que mueve el precio es la
+[clase de almacenamiento](/glosario/#termino-clase-de-almacenamiento). Hay cuatro
+principales, y se eligen por la frecuencia con la que se van a leer los datos:
+Standard para lo que se usa a menudo, Nearline para lo que se lee alrededor de una
+vez al mes, Coldline para lo que se lee como mucho una vez al trimestre, y Archive para
+lo que se consulta menos de una vez al año. Cuanto más fría la clase, menos cuesta
+guardar cada gigabyte y más cuesta leerlo: las clases frías cobran tarifas de
+recuperación y exigen un periodo mínimo de almacenamiento, de un mes a un año según
+la clase.
+
+Google desglosa el precio en tres componentes: el almacenamiento, según la cantidad
+de datos, la clase y la ubicación del bucket; el procesamiento, que incluye las
+operaciones, las tarifas de recuperación y la replicación entre regiones; y el uso de
+red, por los datos que salen de los buckets. La consecuencia para la dirección:
+**la clase más barata de guardar no es la más barata de usar**. Mover las copias de
+seguridad a Archive ahorra; mover a Archive algo que se consulta cada semana, no.
+
+## Los discos de las máquinas
+
+Las máquinas virtuales de la sección 3 guardan su sistema y sus datos en
+[discos](/glosario/#termino-disco-persistente). Google cobra la capacidad
+aprovisionada de cada disco desde que se crea hasta que se borra, esté o no conectado
+a una máquina, y se use o no el espacio. Un disco de un terabyte con cien gigabytes
+ocupados se cobra como un terabyte.
+
+Dos consecuencias prácticas. La primera: **borrar una máquina no borra necesariamente
+sus discos**, y los discos huérfanos siguen costando. La segunda: el almacenamiento
+local de las máquinas, el más rápido, es temporal; sus datos se pierden al detener la
+máquina. Lo que importa conservar va en discos duraderos.
+
+## Bases de datos administradas: Cloud SQL
+
+[Cloud SQL](/glosario/#termino-cloud-sql) es el servicio de bases de datos
+relacionales administradas de Google, para MySQL, PostgreSQL y SQL Server. Google se
+ocupa de las copias de seguridad, de las actualizaciones del sistema y del motor, y,
+si se contrata la opción de alta disponibilidad, mantiene una máquina en espera en
+otra zona que toma el relevo si falla la principal.
+
+El precio depende de la configuración: cuántos procesadores y cuánta memoria tiene
+la instancia, cuánto almacenamiento se aprovisiona, cuánto tráfico sale de ella, dónde
+está y cuántas direcciones de red tiene. En la práctica, una base de datos Cloud SQL
+**es una máquina que está encendida las veinticuatro horas**, porque una base de datos
+no se apaga por la noche. Y la alta disponibilidad, que conviene para lo que atiende
+clientes, significa pagar la máquina en espera además de la principal.
+
+## Analizar datos a gran escala: BigQuery
+
+[BigQuery](/glosario/#termino-bigquery) es la plataforma de Google para almacenar y
+analizar grandes volúmenes de datos. Google la describe como totalmente administrada
+y sin servidores: el equipo no aprovisiona ni escala nada, y los recursos se asignan
+solos cuando se lanza una consulta.
+
+Su precio tiene dos partes separadas. El almacenamiento, por los datos cargados, con
+una tarifa que baja de forma automática para las tablas que llevan tiempo sin
+modificarse. Y el cómputo, por procesar consultas, con dos modelos a elegir: bajo
+demanda, donde se paga por la cantidad de datos que lee cada consulta, con una
+cantidad mensual gratuita; o por capacidad, donde se paga por potencia de cálculo
+reservada a lo largo del tiempo, con compromisos opcionales de uno o tres años a
+cambio de un precio menor.
+
+La consecuencia para la dirección: en el modelo bajo demanda, **una consulta mal
+escrita sobre una tabla grande puede costar más que un mes de almacenamiento**.
+Google ofrece controles de costo por proyecto y por usuario, y un límite máximo de
+datos por consulta. Conviene que existan y que alguien sepa cuáles son.
+
+## Cómo decidir
+
+| Qué se guarda | Dónde | Por qué se paga |
+|---|---|---|
+| Archivos, copias, registros | Cloud Storage | Espacio por mes según la clase, más operaciones y lectura |
+| El sistema y los datos de una máquina | Disco persistente | Capacidad aprovisionada, exista o no la máquina |
+| Datos de una aplicación que lee y escribe sin parar | Cloud SQL | Una instancia encendida: procesador, memoria, disco y tráfico |
+| Datos para analizar e informar | BigQuery | Almacenamiento más consultas, bajo demanda o por capacidad |
+
+## Tres preguntas para la próxima reunión
+
+1. ¿Cuántos datos guardamos, en qué clases de almacenamiento, y cuándo se revisó por
+   última vez qué debería pasar a una clase más fría o borrarse?
+2. ¿Tenemos discos o copias de seguridad que ya no pertenecen a ninguna máquina?
+3. ¿Nuestras consultas en BigQuery van bajo demanda o por capacidad, y qué límites
+   de costo por consulta hay puestos?

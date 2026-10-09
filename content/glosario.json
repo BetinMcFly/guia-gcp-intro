@@ -194,5 +194,45 @@
       "committed use discount",
       "CUD"
     ]
+  },
+  {
+    "termino": "Cloud Storage",
+    "definicion": "Servicio de Google Cloud para guardar archivos de cualquier tipo como objetos dentro de buckets. Duradero y disponible globalmente. Se cobra por el espacio ocupado según la clase y la ubicación, más las operaciones, las tarifas de recuperación y los datos que salen.",
+    "fuente": "https://docs.cloud.google.com/storage/docs/introduction"
+  },
+  {
+    "termino": "Bucket",
+    "definicion": "Contenedor de Cloud Storage donde se guardan los objetos. Cada proyecto puede tener varios; cada bucket tiene una ubicación y una clase de almacenamiento por defecto.",
+    "fuente": "https://docs.cloud.google.com/storage/docs/introduction"
+  },
+  {
+    "termino": "Clase de almacenamiento",
+    "definicion": "Categoría de Cloud Storage que fija cuánto cuesta guardar y cuánto cuesta leer. Standard para datos de uso frecuente; Nearline para lectura mensual; Coldline, trimestral; Archive, anual. Las clases frías cobran recuperación y exigen un periodo mínimo.",
+    "fuente": "https://docs.cloud.google.com/storage/docs/storage-classes",
+    "alias": [
+      "Standard",
+      "Nearline",
+      "Coldline",
+      "Archive"
+    ]
+  },
+  {
+    "termino": "Disco persistente",
+    "definicion": "Almacenamiento duradero de una máquina virtual. Se cobra la capacidad aprovisionada desde que se crea hasta que se borra, esté o no conectado a una máquina. Conserva los datos cuando la máquina se detiene o se borra.",
+    "fuente": "https://docs.cloud.google.com/compute/docs/disks",
+    "alias": [
+      "Persistent Disk",
+      "Hyperdisk"
+    ]
+  },
+  {
+    "termino": "Cloud SQL",
+    "definicion": "Servicio de bases de datos relacionales administradas para MySQL, PostgreSQL y SQL Server. Google se ocupa de copias de seguridad, actualizaciones y, si se contrata, de una máquina en espera en otra zona. Se cobra como una instancia encendida: procesador, memoria, almacenamiento y tráfico.",
+    "fuente": "https://docs.cloud.google.com/sql/docs/introduction"
+  },
+  {
+    "termino": "BigQuery",
+    "definicion": "Plataforma de Google para almacenar y analizar grandes volúmenes de datos, sin servidores que administrar. Cobra el almacenamiento aparte del cómputo; las consultas se pagan por datos leídos (bajo demanda) o por capacidad reservada.",
+    "fuente": "https://docs.cloud.google.com/bigquery/docs/introduction"
   }
 ]

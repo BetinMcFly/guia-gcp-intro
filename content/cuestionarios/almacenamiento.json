@@ -1,1 +1,67 @@
-[]
+[
+  {
+    "id": "almacenamiento-01",
+    "pregunta": "¿En qué se diferencia el costo de los datos del costo del cómputo?",
+    "opciones": [
+      "No se diferencia: ambos se cobran solo mientras una aplicación está corriendo.",
+      "Los datos son gratis mientras no se lean.",
+      "Los datos se cobran por el espacio que ocupan cada mes, desde que se guardan hasta que se borran, estén usándose o no.",
+      "Los datos se cobran una sola vez, al guardarlos."
+    ],
+    "correcta": 2,
+    "explicacion": "El cómputo se paga mientras algo corre; el almacenamiento, por el espacio ocupado mes a mes. Una aplicación apagada deja de costar; sus datos, no.",
+    "ancla": "#los-datos-cuestan-aunque-nadie-los-use"
+  },
+  {
+    "id": "almacenamiento-02",
+    "pregunta": "¿Qué pasa si se guardan en la clase Archive de Cloud Storage unos informes que se consultan cada semana?",
+    "opciones": [
+      "Se ahorra en almacenamiento, pero cada lectura paga tarifas de recuperación y la clase exige un periodo mínimo: puede salir más caro que Standard.",
+      "Se ahorra en todo, porque Archive es la clase más barata.",
+      "No se pueden leer hasta que pase un año.",
+      "Google los mueve solo a Standard al detectar el uso."
+    ],
+    "correcta": 0,
+    "explicacion": "Archive está pensada para datos que se consultan menos de una vez al año. Cuanto más fría la clase, menos cuesta guardar y más cuesta leer: las clases frías cobran recuperación y tienen duración mínima.",
+    "ancla": "#archivos-y-objetos-cloud-storage"
+  },
+  {
+    "id": "almacenamiento-03",
+    "pregunta": "Se borra una máquina virtual que tenía un disco de un terabyte. ¿Qué pasa con el costo del disco?",
+    "opciones": [
+      "Desaparece, porque el disco se borra con la máquina.",
+      "Se reduce a la parte del disco que estaba ocupada.",
+      "Pasa a cobrarse como almacenamiento Archive.",
+      "Sigue cobrándose por la capacidad aprovisionada mientras el disco exista, aunque no esté conectado a ninguna máquina."
+    ],
+    "correcta": 3,
+    "explicacion": "Google cobra la capacidad aprovisionada de un disco desde que se crea hasta que se borra, esté o no conectado a una máquina y se use o no el espacio. Borrar la máquina no borra necesariamente sus discos.",
+    "ancla": "#los-discos-de-las-máquinas"
+  },
+  {
+    "id": "almacenamiento-04",
+    "pregunta": "¿Por qué una base de datos en Cloud SQL se parece, en costo, a una máquina virtual?",
+    "opciones": [
+      "Porque se cobra por consulta, igual que una máquina.",
+      "Porque es una instancia con procesador, memoria y disco que está encendida las veinticuatro horas; con alta disponibilidad, además, se paga la máquina en espera.",
+      "Porque solo se cobra cuando alguien la usa.",
+      "Porque Google la apaga por la noche para ahorrar."
+    ],
+    "correcta": 1,
+    "explicacion": "El precio de Cloud SQL depende de los procesadores, la memoria, el almacenamiento aprovisionado, el tráfico de salida, la ubicación y las direcciones de red. Una base de datos no se apaga, y la alta disponibilidad añade una máquina en espera en otra zona.",
+    "ancla": "#bases-de-datos-administradas-cloud-sql"
+  },
+  {
+    "id": "almacenamiento-05",
+    "pregunta": "En BigQuery con precio bajo demanda, ¿de qué depende lo que cuesta una consulta?",
+    "opciones": [
+      "Del tiempo que tarda en ejecutarse.",
+      "Del número de personas que la ejecutan.",
+      "De la cantidad de datos que lee la consulta, con una cantidad mensual gratuita.",
+      "De nada: las consultas son gratis y solo se paga el almacenamiento."
+    ],
+    "correcta": 2,
+    "explicacion": "Bajo demanda se paga por los datos procesados por cada consulta; por capacidad se paga potencia reservada en el tiempo. Una consulta mal escrita sobre una tabla grande puede costar mucho; existen límites de costo por consulta, proyecto y usuario.",
+    "ancla": "#analizar-datos-a-gran-escala-bigquery"
+  }
+]
