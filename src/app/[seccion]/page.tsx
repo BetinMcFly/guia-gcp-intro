@@ -6,9 +6,10 @@
  * oficiales al pie. generateStaticParams enumera los slugs de content/ para que la
  * exportación estática genere una carpeta por sección.
  */
-export async function generateStaticParams() {
-  // PENDIENTE: leer los slugs desde src/lib/contenido.ts
-  return [];
+import { SECCIONES } from "@/lib/contenido";
+
+export function generateStaticParams() {
+  return SECCIONES.map((seccion) => ({ seccion }));
 }
 
 export default async function Seccion() {

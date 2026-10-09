@@ -149,8 +149,14 @@ Puesta en marcha (estado al 2026-10-09):
    Cloud DNS; propiedad verificada. El certificado lo emite Firebase solo.
 3. ✅ Repositorio en GitHub con el secreto `FIREBASE_SERVICE_ACCOUNT` cargado.
 4. ✅ Esqueleto de Next.js y `firebase.json` apuntando a `out/` y al sitio.
-5. ⬜ Primer despliegue manual para validar; después, todo por push a `main`.
-   Los workflows siguen siendo esqueletos: hay que escribir los pasos reales.
+5. ✅ Primer despliegue manual hecho el 2026-10-09: 12 páginas vacías en
+   https://guia-gcp-albertosolano.web.app. Los workflows siguen siendo esqueletos:
+   hay que escribir los pasos reales antes de confiar en el push a `main`.
+
+**Lección del primer build:** con `output: 'export'`, `generateStaticParams` de
+`[seccion]` no puede devolver un arreglo vacío. Por eso `SECCIONES` existe como
+constante en `src/lib/contenido.ts` desde el esqueleto. Next también reescribe
+`tsconfig.json` en cada build (`jsx: react-jsx`, rutas de tipos); no pelear con eso.
 
 `firebase hosting:rollback` **no existe** en el CLI 15.26. Marcha atrás: consola de
 Firebase (historial de versiones), `firebase hosting:clone`, o revertir en git.
