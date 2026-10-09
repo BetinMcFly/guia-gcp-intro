@@ -1,27 +1,79 @@
 # Publicar en producción.
 #
-# Responsabilidad: al hacer push a `main`, construir el sitio (`npm ci && npm run build`
-# → out/), desplegarlo al canal `live` del sitio guia-gcp-albertosolano con la service
-# account del secreto FIREBASE_SERVICE_ACCOUNT, y después comprobar que lo que sirve
-# https://guia-gcp.albertosolano.dev coincide con out/index.html, reintentando mientras
-# el CDN propaga (Cache-Control de 300 s).
+# Al hacer push a `main`: construye el sitio (npm ci && npm run build → out/), lo
+# despliega al canal `live` del sitio guia-gcp-albertosolano con la service account
+# del secreto FIREBASE_SERVICE_ACCOUNT, y comprueba que lo que sirve el dominio
+# coincide con out/index.html, reintentando mientras el CDN propaga (Cache-Control
+# de 300 s). No se fía del "Deploy complete".
 #
 # Patrón de referencia: ~/proyectos/claude-code-guide/.github/workflows/publicar.yml
-# PENDIENTE: pasos reales. Este esqueleto solo deja el disparador definido.
 
 name: Publicar en producción
 
 on:
   push:
     branches: [main]
+    paths:
+      - 'src/**'
+      - 'content/**'
+      - 'public/**'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'next.config.ts'
+      - 'tsconfig.json'
+      - 'firebase.json'
+      - '.firebaserc'
+      - '.github/workflows/publicar.yml'
   workflow_dispatch:
 
 concurrency:
   group: produccion
   cancel-in-progress: false
 
+env:
+  PROYECTO: claude-projects-496723
+  DOMINIO: https://guia-gcp.albertosolano.dev
+
 jobs:
   publicar:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "PENDIENTE - build, despliegue y verificación"
+      - uses: actions/checkout@v7
+
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Instalar dependencias
+        run: npm ci
+
+      - name: Comprobar tipos
+        run: npm run typecheck
+
+      - name: Construir la exportación estática
+        run: npm run build
+
+      - name: Desplegar a Firebase Hosting
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: ${{ secrets.GITHUB_TOKEN }}
+          firebaseServiceAccount: ${{ secrets.FIREBASE_SERVICE_ACCOUNT }}
+          projectId: ${{ env.PROYECTO }}
+          channelId: live
+
+      - name: Comprobar que lo publicado es lo del repositorio
+        run: |
+          # El CDN sirve con Cache-Control de 300 s, así que reintentamos hasta
+          # que refleje el despliegue en vez de fallar al primer intento.
+          for i in $(seq 1 10); do
+            curl -sf "$DOMINIO/" -o /tmp/publicado.html || true
+            if diff -q /tmp/publicado.html out/index.html >/dev/null 2>&1; then
+              echo "PUBLICADO = REPOSITORIO"
+              exit 0
+            fi
+            echo "intento $i: todavía no propagado, esperando 30s"
+            sleep 30
+          done
+          echo "El sitio no refleja el despliegue tras 5 minutos."
+          exit 1
