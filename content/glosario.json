@@ -234,5 +234,111 @@
     "termino": "BigQuery",
     "definicion": "Plataforma de Google para almacenar y analizar grandes volúmenes de datos, sin servidores que administrar. Cobra el almacenamiento aparte del cómputo; las consultas se pagan por datos leídos (bajo demanda) o por capacidad reservada.",
     "fuente": "https://docs.cloud.google.com/bigquery/docs/introduction"
+  },
+  {
+    "termino": "VPC",
+    "definicion": "Red privada virtual de la empresa dentro de Google Cloud. Es un recurso global formado por subredes regionales, con un firewall distribuido propio. Se conecta con las oficinas por Cloud VPN o Cloud Interconnect.",
+    "fuente": "https://docs.cloud.google.com/vpc/docs/overview",
+    "alias": [
+      "Virtual Private Cloud",
+      "red VPC"
+    ]
+  },
+  {
+    "termino": "Subred",
+    "definicion": "Parte regional de una red VPC: el rango de direcciones internas que usan los recursos de una región.",
+    "fuente": "https://docs.cloud.google.com/vpc/docs/overview"
+  },
+  {
+    "termino": "Firewall",
+    "definicion": "Conjunto de reglas de la red VPC que deciden qué tráfico puede llegar a qué destino. Google lo implementa como un firewall virtual distribuido en cada red.",
+    "fuente": "https://docs.cloud.google.com/vpc/docs/overview"
+  },
+  {
+    "termino": "Balanceador de carga",
+    "definicion": "Servicio que reparte el tráfico de los usuarios entre varias copias de una aplicación, escala con el tráfico y lo desvía a copias de respaldo si las principales fallan. Puede ser global o regional, externo o interno.",
+    "fuente": "https://docs.cloud.google.com/load-balancing/docs/load-balancing-overview",
+    "alias": [
+      "Cloud Load Balancing",
+      "load balancer"
+    ]
+  },
+  {
+    "termino": "Transferencia de datos",
+    "definicion": "Movimiento de datos hacia, desde o dentro de Google Cloud. La entrante no se cobra; la saliente y la que cruza zonas, regiones o continentes, sí, y más cuanto más lejos. Es el costo de salida al cambiar de proveedor.",
+    "fuente": "https://cloud.google.com/vpc/network-pricing",
+    "alias": [
+      "egress",
+      "tráfico de salida"
+    ]
+  },
+  {
+    "termino": "Nivel de red",
+    "definicion": "Calidad con la que Google entrega el tráfico a internet. Premium, el predeterminado, usa la red propia de Google hasta cerca del usuario; Standard usa internet público, con menor calidad y menor precio.",
+    "fuente": "https://docs.cloud.google.com/network-tiers/docs/overview",
+    "alias": [
+      "Network Service Tiers",
+      "Premium Tier",
+      "Standard Tier"
+    ]
+  },
+  {
+    "termino": "SKU",
+    "definicion": "Unidad de precio de cada cosa que Google Cloud vende: el identificador del recurso que usa un servicio, con su tarifa por región. Todo cargo de la factura se mide contra un SKU.",
+    "fuente": "https://docs.cloud.google.com/billing/docs/how-to/read-invoice"
+  },
+  {
+    "termino": "Factura",
+    "definicion": "Documento mensual de la cuenta de facturación, disponible hacia el quinto día hábil del mes siguiente. Es un resumen: no detalla cada recurso ni el costo por proyecto; para eso están los informes y la exportación.",
+    "fuente": "https://docs.cloud.google.com/billing/docs/how-to/read-invoice",
+    "alias": [
+      "invoice"
+    ]
+  },
+  {
+    "termino": "Informe de facturación",
+    "definicion": "Vista de la consola con el gasto de una cuenta de facturación, agrupable por proyecto, servicio o SKU y filtrable por ubicación o etiquetas, con previsión si el rango termina en el futuro y con o sin descuentos aplicados.",
+    "fuente": "https://docs.cloud.google.com/billing/docs/how-to/reports",
+    "alias": [
+      "Cloud Billing reports"
+    ]
+  },
+  {
+    "termino": "Etiqueta",
+    "definicion": "Par de clave y valor que el equipo asigna a un recurso para marcar, por ejemplo, el área, el cliente o el entorno al que pertenece. Los informes de facturación agrupan y filtran el gasto por etiquetas.",
+    "fuente": "https://docs.cloud.google.com/billing/docs/how-to/reports",
+    "alias": [
+      "label"
+    ]
+  },
+  {
+    "termino": "Exportación de facturación",
+    "definicion": "Envío automático de los datos de uso y costo a BigQuery para analizarlos en detalle por servicio, SKU, proyecto, etiqueta y ubicación. Google recomienda activarla al crear la cuenta de facturación porque los datos anteriores pueden no recuperarse.",
+    "fuente": "https://docs.cloud.google.com/billing/docs/how-to/export-data-bigquery",
+    "alias": [
+      "Cloud Billing export"
+    ]
+  },
+  {
+    "termino": "FinOps",
+    "definicion": "Práctica de gestionar el gasto en la nube como responsabilidad compartida entre finanzas, negocio y tecnología. Google alinea con ella los principios de su pilar de optimización de costos y señala que aplica a cualquier organización.",
+    "fuente": "https://docs.cloud.google.com/architecture/framework/cost-optimization"
+  },
+  {
+    "termino": "Presupuesto",
+    "definicion": "Importe fijado en Cloud Billing para una cuenta, proyecto, servicio o etiqueta, con umbrales que disparan alertas sobre el gasto real o previsto. No limita el gasto por sí mismo: avisa. Con notificaciones programáticas se pueden automatizar respuestas.",
+    "fuente": "https://docs.cloud.google.com/billing/docs/how-to/budgets",
+    "alias": [
+      "budget",
+      "alerta de presupuesto"
+    ]
+  },
+  {
+    "termino": "Cuota",
+    "definicion": "Límite de cuánto de un recurso puede usar un proyecto: cantidad, ritmo u operaciones simultáneas. Protege de un uso inesperado y se puede pedir un ajuste cuando hace falta más.",
+    "fuente": "https://docs.cloud.google.com/docs/quotas/overview",
+    "alias": [
+      "quota"
+    ]
   }
 ]

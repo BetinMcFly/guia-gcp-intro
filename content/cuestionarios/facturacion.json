@@ -1,1 +1,67 @@
-[]
+[
+  {
+    "id": "facturacion-01",
+    "pregunta": "¿Qué es un SKU en la factura de Google Cloud?",
+    "opciones": [
+      "El número de la factura.",
+      "El identificador del proyecto que gasta.",
+      "La unidad de precio de cada cosa que Google vende, con su tarifa por región.",
+      "El nombre de la cuenta de facturación."
+    ],
+    "correcta": 2,
+    "explicacion": "Cada consumo se mide contra un SKU, la unidad de precio del recurso usado por el servicio. Los SKU pertenecen a un servicio, el consumo ocurre en un proyecto y el proyecto está vinculado a una cuenta de facturación.",
+    "ancla": "#de-dónde-sale-cada-línea"
+  },
+  {
+    "id": "facturacion-02",
+    "pregunta": "¿Qué muestra la factura mensual en PDF de Google Cloud?",
+    "opciones": [
+      "Un resumen; el detalle por recurso y por proyecto está en los informes de facturación.",
+      "El detalle de cada recurso, línea por línea.",
+      "Solo los descuentos aplicados.",
+      "El gasto previsto del mes siguiente."
+    ],
+    "correcta": 0,
+    "explicacion": "Google indica que la factura PDF es un resumen y no detalla cada recurso ni el costo por proyecto. Para eso están los informes de facturación y la exportación a BigQuery.",
+    "ancla": "#de-dónde-sale-cada-línea"
+  },
+  {
+    "id": "facturacion-03",
+    "pregunta": "¿Para qué sirven las etiquetas en el control del gasto?",
+    "opciones": [
+      "Para que Google aplique descuentos.",
+      "Para limitar el gasto de un proyecto.",
+      "Para cifrar los datos de facturación.",
+      "Para marcar a qué área o cliente pertenece cada recurso y poder agrupar el gasto por esa dimensión en los informes."
+    ],
+    "correcta": 3,
+    "explicacion": "Las etiquetas son pares de clave y valor que el equipo pone a los recursos. Los informes permiten filtrar y agrupar el gasto por etiqueta; sin ellas, no se puede responder quién gasta qué.",
+    "ancla": "#los-informes-de-facturación"
+  },
+  {
+    "id": "facturacion-04",
+    "pregunta": "¿Qué pasa con un descuento por compromiso de uso si la empresa termina usando menos de lo comprometido?",
+    "opciones": [
+      "Google devuelve la diferencia.",
+      "La cuota del compromiso se cobra igual durante todo el plazo.",
+      "El compromiso se cancela automáticamente.",
+      "Se traslada al mes siguiente."
+    ],
+    "correcta": 1,
+    "explicacion": "La cuota del compromiso se cobra durante todo el plazo, se use o no, y el uso que exceda el compromiso se paga a precio normal. Conviene con una base de uso estable; es un error con uso incierto.",
+    "ancla": "#los-descuentos-que-existen"
+  },
+  {
+    "id": "facturacion-05",
+    "pregunta": "¿Cuándo recomienda Google activar la exportación de facturación a BigQuery?",
+    "opciones": [
+      "Cuando la factura supere cierto importe.",
+      "Al final de cada año fiscal.",
+      "Al mismo tiempo que se crea la cuenta de facturación, porque los datos anteriores pueden no recuperarse.",
+      "Nunca: los informes de la consola bastan."
+    ],
+    "correcta": 2,
+    "explicacion": "Google recomienda activarla al crear la cuenta de facturación. Según dónde se guarden los datos, no se añaden de forma retroactiva: lo que no se exportó, se perdió.",
+    "ancla": "#guardar-el-detalle-exportar-a-bigquery"
+  }
+]

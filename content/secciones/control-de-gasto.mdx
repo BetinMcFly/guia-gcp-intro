@@ -1,13 +1,99 @@
 ---
 titulo: "Controlar el gasto"
-resumen: "Sección en preparación."
+resumen: "La factura de la nube es variable por diseño. Controlarla no es recortar, sino tener presupuestos con alertas, cuotas que frenen lo inesperado, un informe que diga quién gasta qué y un ritual mensual para mirarlo."
 orden: 7
 ---
 
-{/* PENDIENTE: contenido redactado para directivos no técnicos, contrastado con
-    https://cloud.google.com/docs. Sin cifras de precio en prosa. Exporta `fuentes`
-    con los enlaces oficiales que respaldan lo dicho. */}
+export const fuentes = [
+  { titulo: "Well-Architected Framework: cost optimization pillar (documentación)", url: "https://docs.cloud.google.com/architecture/framework/cost-optimization" },
+  { titulo: "Create, edit, or delete budgets and budget alerts (documentación)", url: "https://docs.cloud.google.com/billing/docs/how-to/budgets" },
+  { titulo: "Cloud Quotas overview (documentación)", url: "https://docs.cloud.google.com/docs/quotas/overview" },
+  { titulo: "View your billing reports and cost trends (documentación)", url: "https://docs.cloud.google.com/billing/docs/how-to/reports" },
+  { titulo: "Export Cloud Billing data to BigQuery (documentación)", url: "https://docs.cloud.google.com/billing/docs/how-to/export-data-bigquery" },
+  { titulo: "Google Cloud pricing (presupuestos, alertas y cuotas)", url: "https://cloud.google.com/pricing" },
+];
 
-export const fuentes = [];
+## Cuatro principios antes que cualquier herramienta
 
-Esta sección todavía no está escrita.
+Google publica en su marco de arquitectura un pilar dedicado a la optimización de
+costos, con cuatro principios. En sus términos: alinear el gasto en la nube con el
+valor de negocio; fomentar una cultura en la que todas las personas de la organización
+tengan en cuenta el costo de sus decisiones; aprovisionar solo los recursos necesarios
+y pagar solo por los que se consumen; y vigilar continuamente el uso y el costo,
+ajustando de forma proactiva. Google señala que estos principios coinciden con los de
+[FinOps](/glosario/#termino-finops), la práctica de gestionar el gasto en la nube como
+una responsabilidad compartida entre finanzas, negocio y tecnología, y que aplica a
+cualquier organización, sea cual sea su tamaño.
+
+El orden importa. **Ninguna herramienta compensa que nadie se sienta responsable del
+gasto.** Lo que sigue son las herramientas; los principios son lo que hace que alguien
+las mire.
+
+## Presupuestos y alertas
+
+Un [presupuesto](/glosario/#termino-presupuesto) de Cloud Billing compara el gasto real
+o previsto con una cifra fijada y avisa cuando se cruzan ciertos umbrales. Puede
+abarcar toda la cuenta de facturación, una organización, una carpeta, un proyecto, uno
+o varios servicios, o los recursos con una etiqueta concreta. Las alertas llegan por
+correo a los administradores de facturación y, si se configura, a otras personas, y
+pueden publicarse en un canal programático para automatizar respuestas.
+
+El matiz que todo directivo debe conocer: Google es explícito en que **un presupuesto
+de alertas no limita el gasto**. No impide el uso ni la facturación cuando se supera.
+Es un termómetro, no un interruptor. Con la notificación programática se puede
+automatizar una respuesta, incluida la desactivación de la facturación de un
+proyecto, y Google ofrece además presupuestos con tope de gasto para ciertos
+proyectos y servicios. Pero cortar la facturación apaga lo que hay en el proyecto;
+es una medida para entornos de prueba, no para lo que atiende clientes.
+
+## Cuotas: el freno de lo inesperado
+
+Una [cuota](/glosario/#termino-cuota) limita cuánto de un recurso puede usar un
+proyecto: cuántas máquinas, cuántas solicitudes por minuto, cuántas operaciones a la
+vez. Google las describe como una protección que evita sobrecargar los servicios y
+que ayuda a administrar los recursos propios. Vienen con valores por defecto y se
+puede pedir un ajuste cuando hacen falta más.
+
+Para el control del gasto, las cuotas son el freno que un presupuesto no tiene: un
+error de programación o una clave filtrada no puede crear mil máquinas si la cuota
+dice cien. Conviene que las cuotas de los proyectos de prueba sean bajas a propósito
+y que subirlas sea una decisión explícita.
+
+## Saber quién gasta qué
+
+Las secciones anteriores dejaron las piezas; aquí se juntan. Los
+[informes de facturación](/glosario/#termino-informe-de-facturacion) agrupan el gasto
+por proyecto, servicio o SKU y lo filtran por etiquetas; la
+[exportación a BigQuery](/glosario/#termino-exportacion-de-facturacion) guarda el
+detalle para analizarlo. Con las dos cosas, la pregunta «quién gasta qué» tiene
+respuesta en minutos. Sin etiquetas, o sin exportación, la respuesta es una
+estimación.
+
+Y lo que esas herramientas suelen destapar, porque es lo más común: máquinas
+encendidas que nadie usa, discos huérfanos, datos en una clase de almacenamiento que
+no corresponde a su uso, y compromisos de uso que cubren menos, o más, de lo que se
+consume. Cada uno de esos puntos salió en las secciones 3, 4 y 6.
+
+## Un ritual mensual
+
+Una propuesta concreta, que cabe en una reunión de media hora al mes con quien lleve
+la plataforma:
+
+1. El informe del mes agrupado por proyecto y por etiqueta de área, con la previsión
+   del mes siguiente, frente al presupuesto.
+2. Las alertas que saltaron y qué se hizo con cada una.
+3. La lista de recursos sin uso detectados y cuáles se apagaron o borraron.
+4. La cobertura de los compromisos de uso: qué parte del consumo estable está cubierta
+   y qué compromisos vencen pronto.
+5. Una decisión, al menos: una cuota que bajar, un presupuesto que ajustar, una
+   etiqueta que exigir.
+
+No hace falta entender cada línea. Hace falta que la reunión exista, que tenga dueño y
+que termine con una decisión.
+
+## Tres preguntas para la próxima reunión
+
+1. ¿Qué presupuestos tenemos definidos, quién recibe sus alertas, y cuál fue la última
+   que saltó?
+2. ¿Qué cuotas tienen los proyectos de prueba, y quién puede subirlas?
+3. ¿Quién es el dueño de la reunión mensual de gasto, y cuándo es la próxima?

@@ -1,8 +1,8 @@
 # CLAUDE.md — memoria del proyecto
 
 Lee esto antes de tocar nada. Aquí están las decisiones de la entrevista inicial y las
-reglas que **no** se pueden deducir del código. Estado: **CI operativo, diseño hecho, cuestionario implementado, secciones 1 a 4
-escritas y publicadas; faltan las secciones 5 a 7, la calculadora y el buscador**.
+reglas que **no** se pueden deducir del código. Estado: **sitio completo y publicado el 2026-10-10**: siete secciones con cuestionario y
+fuentes, glosario con buscador, calculadora con precios verificados, CI operativo.
 
 ## Qué es este proyecto
 
@@ -74,7 +74,8 @@ guia-gcp-intro/
 ├── src/mdx-components.tsx    # mapeo de elementos MDX (Next lo exige con este nombre)
 ├── src/tipos/mdx.d.ts        # lo que exporta cada módulo MDX: frontmatter y fuentes
 ├── src/components/           # Navegacion, TemaToggle, Cuestionario, Calculadora, Glosario, Buscador, Fuente
-├── src/lib/                  # contenido.ts (única lectura de content/), precios.ts, indice-busqueda.ts
+├── src/lib/                  # contenido.ts (única lectura de content/), precios.ts (estimaciones puras),
+│                         #   indice-busqueda.ts (índice en build con node:fs)
 └── content/
     ├── README.md             # esquema de cada archivo de contenido y lista de secciones
     ├── secciones/*.mdx       # 7 secciones: introduccion, organizacion, computo, almacenamiento,
@@ -82,7 +83,7 @@ guia-gcp-intro/
     │                         #   resumen, orden. Exportan `fuentes` (lista de {titulo, url})
     ├── cuestionarios/*.json  # preguntas, opción correcta, explicación, enlace a sección
     ├── glosario.json         # término, definición breve, fuente oficial
-    └── precios.json          # precios de lista USD + fecha_verificacion + url de origen
+    └── precios.json          # precios de lista USD con sku, fecha_verificacion y url; ver «Los precios se verifican»
 ```
 
 `trailingSlash: true` hace que cada ruta salga como `carpeta/index.html`, que es lo
@@ -95,12 +96,42 @@ obligatorio con exportación estática.
 nunca de memoria.** Cada sección termina con un bloque «Fuentes oficiales» con los
 enlaces concretos que respaldan lo dicho. Una afirmación sin fuente no se publica.
 
+**Los precios se verifican con la Cloud Billing Catalog API, no raspando páginas.**
+Las páginas de precios de `cloud.google.com` cargan las tablas por JavaScript y no se
+pueden leer con curl. La API responde en solo lectura con las credenciales del
+propietario y la cabecera `x-goog-user-project: claude-projects-496723`:
+
+```bash
+TOKEN=$(gcloud auth print-access-token)
+curl -sS -H "Authorization: Bearer $TOKEN" -H "x-goog-user-project: claude-projects-496723" \
+  "https://cloudbilling.googleapis.com/v1/services/6F81-5844-456A/skus?pageSize=5000&currencyCode=USD"
+```
+
+IDs de servicio usados: Compute Engine `6F81-5844-456A`, Cloud Storage `95FF-2EF5-5EA1`,
+BigQuery `24E6-581D-38E5`, Cloud Run `152E-C115-5142`, GKE `CCD8-9BF1-090E`. Cada item
+de `precios.json` lleva su `sku`; para reverificar, busca ese SKU, toma el primer tramo
+con precio distinto de cero (`tieredRates`) y actualiza `usd` y `fecha_verificacion`.
+Compute Engine tiene más de 30.000 SKU: pagina con `nextPageToken`.
+
 **Los precios viven solo en `content/precios.json`.** Cada entrada lleva `usd`,
 `unidad`, `region`, `url` de la página oficial de precios y `fecha_verificacion`.
 La calculadora muestra esa fecha y un aviso de «estimación orientativa, precios de
 lista, sin descuentos» con enlace a https://cloud.google.com/products/calculator.
 Ninguna cifra de precio se escribe en prosa dentro de las secciones: siempre se
 lee del archivo, para que actualizar un precio sea cambiar un número en un sitio.
+
+**La calculadora es `src/lib/precios.ts` + `Calculadora.tsx`.** Las funciones de
+estimación son puras y reciben números; la convención de 730 horas por mes está en
+`HORAS_MES`. Cinco escenarios: máquina virtual E2, Cloud Storage por clase, salida a
+internet (primer tramo Premium de América a América), BigQuery bajo demanda y Cloud Run
+por solicitudes. Si añades un escenario, añade primero su item a `precios.json` con
+`sku`; `precioDe` lanza error en build si falta.
+
+**El buscador es `src/lib/indice-busqueda.ts` + `Buscador.tsx`.** El índice se
+construye en build leyendo los MDX con `node:fs`, parte cada sección por `## ` y
+calcula las anclas con `github-slugger`, el mismo algoritmo que `rehype-slug`. Viaja
+embebido en la página del glosario (unos 140 KB de HTML en total). La puntuación es simple: título vale
+5, cuerpo 1, todas las palabras presentes +3.
 
 **Los cuestionarios no guardan nada.** Sin localStorage, sin cookies, sin envío.
 Cada respuesta muestra si es correcta, por qué, y enlaza a la sección que lo explica.

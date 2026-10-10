@@ -46,8 +46,8 @@ export default async function Portada() {
         <h2 id="herramientas">Dos herramientas</h2>
         <ul className="lista-herramientas">
           <li>
-            <Link href="/glosario/">Glosario</Link>
-            <p>Cada término técnico que usa la guía, definido en una o dos frases.</p>
+            <Link href="/glosario/">Glosario y búsqueda</Link>
+            <p>Cada término técnico que usa la guía, definido en una o dos frases, y un buscador de toda la guía.</p>
           </li>
           <li>
             <Link href="/calculadora/">Calculadora de costos</Link>

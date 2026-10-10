@@ -811,3 +811,253 @@ dl {
 .prosa tr:last-child td {
   border-bottom: 0;
 }
+
+/* ---------- Calculadora ---------- */
+
+.calculadora {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.escenarios {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.escenarios legend {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--secundario);
+  margin-bottom: 0.5rem;
+}
+
+.escenario {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    "radio titulo"
+    "radio desc";
+  column-gap: 0.75rem;
+  align-items: start;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.escenario:hover {
+  background: var(--superficie);
+}
+
+.escenario.activo {
+  border-color: var(--primario);
+  background: var(--primario-contenedor);
+}
+
+.escenario input {
+  grid-area: radio;
+  margin: 0.3rem 0 0;
+  accent-color: var(--primario-boton);
+}
+
+.escenario-titulo {
+  grid-area: titulo;
+  font-weight: 500;
+}
+
+.escenario.activo .escenario-titulo {
+  color: var(--primario);
+}
+
+.escenario-desc {
+  grid-area: desc;
+  font-size: 0.9rem;
+  color: var(--secundario);
+}
+
+.panel {
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 1.25rem;
+  display: grid;
+  gap: 1.25rem;
+}
+
+.campos {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+}
+
+.campo {
+  display: grid;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.campo label {
+  font-size: 0.9rem;
+  color: var(--secundario);
+}
+
+.campo input,
+.campo select {
+  font: inherit;
+  font-size: 1rem;
+  color: var(--texto);
+  background: var(--fondo);
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 0.55rem 0.75rem;
+  width: 100%;
+  min-width: 0;
+}
+
+.campo input:focus-visible,
+.campo select:focus-visible {
+  outline: 2px solid var(--foco);
+  outline-offset: 1px;
+  border-color: var(--primario);
+}
+
+.resultado {
+  border-left: 4px solid var(--dinero);
+  background: var(--dinero-contenedor);
+  border-radius: var(--radio);
+  padding: 1rem 1.25rem;
+}
+
+.resultado-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin: 0 0 0.75rem;
+}
+
+.resultado-total span {
+  color: var(--secundario);
+  font-size: 0.9rem;
+}
+
+.resultado-total strong {
+  font-size: 1.75rem;
+  font-weight: 500;
+  color: var(--dinero);
+  font-variant-numeric: tabular-nums;
+}
+
+.resultado-lineas {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 0.75rem;
+  font-size: 0.95rem;
+}
+
+.resultado-lineas li {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.25rem 0;
+  border-top: 1px solid var(--borde);
+  min-width: 0;
+}
+
+.resultado-lineas li span:last-child {
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.resultado-nota {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--secundario);
+}
+
+.pista {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--secundario);
+}
+
+/* ---------- Buscador ---------- */
+
+.buscador {
+  margin: 0 0 var(--bloque);
+}
+
+.buscador-titulo {
+  font-size: 1.25rem;
+  margin-bottom: 0.5em;
+}
+
+.buscador-campo input {
+  font: inherit;
+  font-size: 1.05rem;
+  width: 100%;
+  min-width: 0;
+  color: var(--texto);
+  background: var(--superficie);
+  border: 1px solid var(--borde);
+  border-radius: 999px;
+  padding: 0.7rem 1.1rem;
+}
+
+.buscador-campo input:focus-visible {
+  outline: 2px solid var(--foco);
+  outline-offset: 1px;
+  background: var(--fondo);
+}
+
+.visualmente-oculto {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.resultados {
+  list-style: none;
+  padding: 0;
+  margin: 1rem 0 0;
+  display: grid;
+  gap: 0.5rem;
+}
+
+.resultados a {
+  display: grid;
+  gap: 0.15rem;
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  padding: 0.75rem 1rem;
+  color: var(--texto);
+  min-width: 0;
+}
+
+.resultados a:hover {
+  background: var(--superficie);
+  text-decoration: none;
+}
+
+.resultado-origen {
+  font-size: 0.8rem;
+  color: var(--secundario);
+}
+
+.resultado-titulo {
+  font-weight: 500;
+  color: var(--primario);
+}
+
+.resultado-extracto {
+  font-size: 0.9rem;
+  color: var(--secundario);
+  overflow-wrap: anywhere;
+}

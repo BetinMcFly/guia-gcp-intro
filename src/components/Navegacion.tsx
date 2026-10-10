@@ -13,7 +13,7 @@ import { usePathname } from "next/navigation";
 import type { ResumenSeccion } from "@/lib/contenido";
 
 const HERRAMIENTAS = [
-  { href: "/glosario/", titulo: "Glosario" },
+  { href: "/glosario/", titulo: "Glosario y búsqueda" },
   { href: "/calculadora/", titulo: "Calculadora de costos" },
 ];
 

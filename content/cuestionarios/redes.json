@@ -1,1 +1,67 @@
-[]
+[
+  {
+    "id": "redes-01",
+    "pregunta": "¿Por qué una aplicación que atiende clientes debería estar en más de una zona?",
+    "opciones": [
+      "Porque así se cobra menos por el tráfico.",
+      "Porque cada zona es un dominio de fallo independiente: si una falla, las demás siguen funcionando.",
+      "Porque Google exige al menos dos zonas por aplicación.",
+      "Porque las zonas se reparten la factura."
+    ],
+    "correcta": 1,
+    "explicacion": "Cada región tiene tres o más zonas, y cada zona se considera un único dominio de fallo. Repartir lo crítico en varias zonas es la forma básica de seguir funcionando cuando una falla.",
+    "ancla": "#dónde-poner-cada-cosa"
+  },
+  {
+    "id": "redes-02",
+    "pregunta": "¿Qué decide qué tráfico puede llegar a qué destino dentro de la red privada de la empresa en Google Cloud?",
+    "opciones": [
+      "El balanceador de carga.",
+      "La cuenta de facturación.",
+      "Las reglas del firewall virtual distribuido de la red VPC.",
+      "El nivel de red elegido."
+    ],
+    "correcta": 2,
+    "explicacion": "Cada red VPC incluye un firewall virtual distribuido cuyas reglas controlan qué paquetes pueden viajar a qué destinos. Es la frontera de seguridad de la red.",
+    "ancla": "#la-red-privada-de-la-empresa-en-la-nube"
+  },
+  {
+    "id": "redes-03",
+    "pregunta": "¿Qué aporta un balanceador de carga cuando una aplicación tiene varias copias?",
+    "opciones": [
+      "Reparte el tráfico entre las copias y, si las principales fallan, lo mueve a las de respaldo.",
+      "Hace que las copias cuesten la mitad.",
+      "Sustituye al firewall.",
+      "Guarda una copia de los datos en cada región."
+    ],
+    "correcta": 0,
+    "explicacion": "El balanceador distribuye el tráfico de los usuarios entre varias instancias, escala con el tráfico y mueve el tráfico a los respaldos si los principales dejan de responder. Convierte la redundancia en disponibilidad real.",
+    "ancla": "#repartir-el-tráfico-balanceadores"
+  },
+  {
+    "id": "redes-04",
+    "pregunta": "¿Cuál de estos movimientos de datos no se cobra en Google Cloud?",
+    "opciones": [
+      "Enviar datos de una región de Europa a una de Asia.",
+      "Sacar datos hacia internet para los usuarios.",
+      "Mover datos entre dos zonas de la misma región.",
+      "Meter datos en la nube desde fuera (transferencia entrante)."
+    ],
+    "correcta": 3,
+    "explicacion": "La transferencia de datos entrante no se cobra. Se cobra lo que sale y lo que se mueve, y más cuanto más lejos: entre zonas, entre regiones, entre continentes y hacia internet.",
+    "ancla": "#por-qué-el-tráfico-de-salida-cuesta"
+  },
+  {
+    "id": "redes-05",
+    "pregunta": "Si el equipo no elige nivel de red, ¿cuál se usa y qué implica?",
+    "opciones": [
+      "Standard, el más barato, por internet público.",
+      "Ninguno: hay que elegirlo al crear cada recurso.",
+      "Premium, que lleva el tráfico por la red propia de Google y cuesta más que Standard.",
+      "El que tenga la región con menor latencia."
+    ],
+    "correcta": 2,
+    "explicacion": "Si no se elige un nivel de red se usa Premium, que lleva el tráfico por la red de Google hasta cerca del usuario. Standard lo entrega por internet público, con menor calidad y menor precio.",
+    "ancla": "#por-qué-el-tráfico-de-salida-cuesta"
+  }
+]

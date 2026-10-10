@@ -1,1 +1,67 @@
-[]
+[
+  {
+    "id": "control-01",
+    "pregunta": "¿Qué dice Google sobre lo que hace un presupuesto de alertas cuando el gasto supera el importe fijado?",
+    "opciones": [
+      "Detiene automáticamente todos los servicios del proyecto.",
+      "Bloquea la cuenta de facturación hasta el mes siguiente.",
+      "Avisa, pero no limita el gasto ni impide el uso ni la facturación.",
+      "Aplica un descuento para compensar el exceso."
+    ],
+    "correcta": 2,
+    "explicacion": "Un presupuesto de alertas no limita el gasto: es un termómetro, no un interruptor. Para actuar hay que automatizar una respuesta con la notificación programática o usar los presupuestos con tope de gasto donde existan.",
+    "ancla": "#presupuestos-y-alertas"
+  },
+  {
+    "id": "control-02",
+    "pregunta": "¿Qué freno ofrece una cuota que un presupuesto no ofrece?",
+    "opciones": [
+      "Limita cuánto de un recurso puede usar un proyecto, de modo que un error o una clave filtrada no pueda crear recursos sin tope.",
+      "Reduce el precio de los recursos que superan el límite.",
+      "Envía un informe mensual a finanzas.",
+      "Borra los recursos sin uso."
+    ],
+    "correcta": 0,
+    "explicacion": "Las cuotas restringen cuánto de un recurso puede usar un proyecto y protegen de un uso inesperado. Un presupuesto solo avisa; una cuota impide crear más de lo permitido.",
+    "ancla": "#cuotas-el-freno-de-lo-inesperado"
+  },
+  {
+    "id": "control-03",
+    "pregunta": "¿Cuál de los cuatro principios del pilar de optimización de costos de Google pone el acento en las personas?",
+    "opciones": [
+      "Aprovisionar solo los recursos necesarios.",
+      "Vigilar continuamente el uso y el costo.",
+      "Alinear el gasto con el valor de negocio.",
+      "Fomentar una cultura en la que todos tengan en cuenta el costo de sus decisiones."
+    ],
+    "correcta": 3,
+    "explicacion": "Los cuatro principios son alinear gasto y valor, fomentar una cultura de conciencia de costos, aprovisionar solo lo necesario y optimizar de forma continua. Google los vincula a FinOps. Ninguna herramienta compensa que nadie se sienta responsable del gasto.",
+    "ancla": "#cuatro-principios-antes-que-cualquier-herramienta"
+  },
+  {
+    "id": "control-04",
+    "pregunta": "¿Qué hace falta para responder «quién gasta qué» en minutos y no con una estimación?",
+    "opciones": [
+      "Pedir a Google un informe personalizado.",
+      "Etiquetas en los recursos y la exportación de facturación activada, además de los informes.",
+      "Un presupuesto por cada empleado.",
+      "Cuotas bajas en todos los proyectos."
+    ],
+    "correcta": 1,
+    "explicacion": "Los informes agrupan y filtran por proyecto, servicio, SKU y etiqueta; la exportación a BigQuery guarda el detalle para analizarlo. Sin etiquetas o sin exportación, la respuesta es una estimación.",
+    "ancla": "#saber-quién-gasta-qué"
+  },
+  {
+    "id": "control-05",
+    "pregunta": "¿Qué debería producir, como mínimo, la reunión mensual de gasto?",
+    "opciones": [
+      "Un informe de cien páginas para el consejo.",
+      "La factura firmada por el director financiero.",
+      "Al menos una decisión: una cuota que bajar, un presupuesto que ajustar o una etiqueta que exigir.",
+      "Una lista de todos los SKU consumidos."
+    ],
+    "correcta": 2,
+    "explicacion": "El ritual mensual revisa el informe frente al presupuesto, las alertas, los recursos sin uso y la cobertura de compromisos, y termina con una decisión. Lo importante es que la reunión exista, tenga dueño y decida algo.",
+    "ancla": "#un-ritual-mensual"
+  }
+]

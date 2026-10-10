@@ -1,7 +1,23 @@
 {
-  "fecha_verificacion": null,
+  "fecha_verificacion": "2026-10-10",
   "region": "us-central1",
   "moneda": "USD",
   "fuente_calculadora_oficial": "https://cloud.google.com/products/calculator",
-  "items": []
+  "metodo": "Precios de lista leídos de la Cloud Billing Catalog API (cloudbilling.googleapis.com/v1/services/{id}/skus) el día indicado, usageType OnDemand, región us-central1 o global. El campo sku identifica cada uno. Sin descuentos ni nivel gratuito.",
+  "items": [
+    { "id": "vm_e2_vcpu_hora", "concepto": "Máquina E2: un vCPU durante una hora", "usd": 0.02181159, "unidad": "vCPU-hora", "url": "https://cloud.google.com/compute/vm-instance-pricing", "sku": "CF4E-A0C7-E3BF" },
+    { "id": "vm_e2_ram_gib_hora", "concepto": "Máquina E2: un GiB de memoria durante una hora", "usd": 0.00292353, "unidad": "GiB-hora", "url": "https://cloud.google.com/compute/vm-instance-pricing", "sku": "F449-33EC-A5EF" },
+    { "id": "disco_balanceado_gib_mes", "concepto": "Disco persistente balanceado: un GiB aprovisionado durante un mes", "usd": 0.1, "unidad": "GiB-mes", "url": "https://cloud.google.com/compute/disks-image-pricing", "sku": "6AE1-525F-8B80" },
+    { "id": "storage_standard_gib_mes", "concepto": "Cloud Storage, clase Standard: un GiB durante un mes", "usd": 0.02, "unidad": "GiB-mes", "url": "https://cloud.google.com/storage/pricing", "sku": "E5F0-6A5D-7BAD" },
+    { "id": "storage_nearline_gib_mes", "concepto": "Cloud Storage, clase Nearline: un GiB durante un mes", "usd": 0.01, "unidad": "GiB-mes", "url": "https://cloud.google.com/storage/pricing", "sku": "4EE6-EF73-706C" },
+    { "id": "storage_coldline_gib_mes", "concepto": "Cloud Storage, clase Coldline: un GiB durante un mes", "usd": 0.004, "unidad": "GiB-mes", "url": "https://cloud.google.com/storage/pricing", "sku": "D716-3E59-667B" },
+    { "id": "storage_archive_gib_mes", "concepto": "Cloud Storage, clase Archive: un GiB durante un mes", "usd": 0.0012, "unidad": "GiB-mes", "url": "https://cloud.google.com/storage/pricing", "sku": "EC4B-C190-470D" },
+    { "id": "salida_internet_premium_gib", "concepto": "Transferencia a internet, nivel Premium, de América a América, primer tramo: un GiB", "usd": 0.12, "unidad": "GiB", "url": "https://cloud.google.com/vpc/network-pricing", "sku": "F274-1692-F213" },
+    { "id": "bigquery_consulta_tib", "concepto": "BigQuery bajo demanda: un TiB leído por consultas", "usd": 6.25, "unidad": "TiB", "url": "https://cloud.google.com/bigquery/pricing", "sku": "3362-E469-6BEF" },
+    { "id": "bigquery_almacen_activo_gib_mes", "concepto": "BigQuery: un GiB de almacenamiento lógico activo durante un mes", "usd": 0.023, "unidad": "GiB-mes", "url": "https://cloud.google.com/bigquery/pricing", "sku": "0018-A5A0-9D6D" },
+    { "id": "cloudrun_vcpu_segundo", "concepto": "Cloud Run, facturación por solicitudes: un vCPU durante un segundo", "usd": 0.000024, "unidad": "vCPU-segundo", "url": "https://cloud.google.com/run/pricing", "sku": "4856-B847-F1EB" },
+    { "id": "cloudrun_gib_segundo", "concepto": "Cloud Run, facturación por solicitudes: un GiB de memoria durante un segundo", "usd": 0.0000025, "unidad": "GiB-segundo", "url": "https://cloud.google.com/run/pricing", "sku": "02A2-9231-36A6" },
+    { "id": "cloudrun_millon_solicitudes", "concepto": "Cloud Run: un millón de solicitudes", "usd": 0.4, "unidad": "millón de solicitudes", "url": "https://cloud.google.com/run/pricing", "sku": "2DA5-55D3-E679" },
+    { "id": "gke_cluster_hora", "concepto": "GKE: cuota de administración de un clúster durante una hora", "usd": 0.1, "unidad": "clúster-hora", "url": "https://cloud.google.com/kubernetes-engine/pricing", "sku": "F52D-A61F-C7D1" }
+  ]
 }

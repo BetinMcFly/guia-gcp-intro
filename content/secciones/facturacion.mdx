@@ -1,13 +1,98 @@
 ---
 titulo: "Cómo factura Google Cloud"
-resumen: "Sección en preparación."
+resumen: "La factura mensual es un resumen; el detalle está en los informes. Saber de dónde sale cada línea, qué descuentos existen y cómo se atribuye el gasto a cada proyecto es lo que permite discutir la factura en vez de solo pagarla."
 orden: 6
 ---
 
-{/* PENDIENTE: contenido redactado para directivos no técnicos, contrastado con
-    https://cloud.google.com/docs. Sin cifras de precio en prosa. Exporta `fuentes`
-    con los enlaces oficiales que respaldan lo dicho. */}
+export const fuentes = [
+  { titulo: "Cloud Billing concepts (documentación)", url: "https://docs.cloud.google.com/billing/docs/concepts" },
+  { titulo: "Understand your invoice (documentación)", url: "https://docs.cloud.google.com/billing/docs/how-to/read-invoice" },
+  { titulo: "View your billing reports and cost trends (documentación)", url: "https://docs.cloud.google.com/billing/docs/how-to/reports" },
+  { titulo: "Committed use discounts overview (documentación)", url: "https://docs.cloud.google.com/docs/cuds" },
+  { titulo: "Compute Engine: VM instance pricing (descuentos por uso sostenido y Spot)", url: "https://cloud.google.com/compute/vm-instance-pricing" },
+  { titulo: "Export Cloud Billing data to BigQuery (documentación)", url: "https://docs.cloud.google.com/billing/docs/how-to/export-data-bigquery" },
+  { titulo: "Free cloud features and trial offer (documentación)", url: "https://docs.cloud.google.com/free/docs/free-cloud-features" },
+];
 
-export const fuentes = [];
+## De dónde sale cada línea
 
-Esta sección todavía no está escrita.
+Todo cargo de Google Cloud sigue la misma cadena. Un recurso consume algo, por
+ejemplo una hora de una máquina o un gigabyte guardado un mes. Ese consumo se mide
+contra un [SKU](/glosario/#termino-sku), que es la unidad de precio de cada cosa que
+Google vende, con su tarifa por región. Los SKU pertenecen a un servicio, el consumo
+ocurre en un proyecto, y el proyecto está vinculado a una
+[cuenta de facturación](/glosario/#termino-cuenta-de-facturacion), que es la que
+recibe la factura.
+
+Google emite una [factura](/glosario/#termino-factura) al mes, disponible, según su
+documentación, hacia el quinto día hábil del mes siguiente, con todos los costos del
+mes natural. Y un aviso importante: **la factura en PDF es un resumen**. Google indica
+que no detalla cada recurso ni, desde hace años, el costo por proyecto. Para eso
+existen los informes.
+
+## Los informes de facturación
+
+El [informe de facturación](/glosario/#termino-informe-de-facturacion) de la consola
+muestra el gasto de la cuenta en un gráfico y una tabla, y permite agruparlo por
+proyecto, por servicio o por SKU, y filtrarlo por ubicación, por servicio o por
+[etiquetas](/glosario/#termino-etiqueta), que son pares de clave y valor que el equipo
+pone a los recursos para marcar, por ejemplo, a qué área o a qué cliente pertenecen.
+Si el rango de fechas termina en el futuro, el informe incluye una previsión del
+gasto. Y puede mostrarse con o sin los descuentos y créditos aplicados, para ver el
+ahorro real.
+
+Para la dirección, esto define una petición concreta: **un informe mensual agrupado
+por proyecto y por etiqueta de área**, con la previsión del mes en curso. Si los
+recursos no tienen etiquetas, el informe no puede responder quién gasta qué, y esa
+es una carencia que se resuelve con una norma interna, no con una compra.
+
+## Los descuentos que existen
+
+Sobre el precio de lista hay tres tipos de rebaja, ya vistos en la sección 3 para las
+máquinas; aquí importa cómo se contratan.
+
+- Los descuentos por uso sostenido son automáticos: Google los aplica a los recursos
+  de Compute Engine usados una parte importante del mes, sin pedir nada.
+- Las máquinas Spot tienen precios propios, mucho más bajos, a cambio de que Google
+  pueda interrumpirlas.
+- Los [descuentos por compromiso de uso](/glosario/#termino-descuento-por-compromiso-de-uso)
+  hay que comprarlos. Google ofrece dos familias: los basados en recursos, que
+  comprometen una cantidad mínima de recursos de Compute Engine en una región, y los
+  basados en gasto, que comprometen un gasto mínimo y cubren, según el tipo, Compute
+  Engine, GKE y Cloud Run, o servicios concretos como BigQuery o Cloud SQL. Los plazos
+  habituales son uno o tres años.
+
+Lo que un directivo tiene que entender de un compromiso: **la cuota se cobra durante
+todo el plazo, se use o no**, y lo que exceda el compromiso se paga a precio normal.
+Es la misma lógica que un contrato de telefonía con cuota fija. Conviene cuando hay
+una base de uso estable y conocida; es un error cuando el uso es incierto. Por eso es
+una decisión de presupuesto y no solo técnica.
+
+## Lo gratuito
+
+Dos programas, ya presentados en la sección 1, afectan a la factura. El nivel gratuito
+descuenta cada mes el uso de ciertos productos hasta un límite, sin fecha de fin. Y el
+crédito de la prueba gratuita, para clientes nuevos, cubre el consumo mientras dura.
+Ninguno de los dos aparece como ahorro si el equipo no los conoce; los informes
+muestran los créditos aplicados.
+
+## Guardar el detalle: exportar a BigQuery
+
+Los informes de la consola sirven para mirar; para analizar hace falta el detalle. La
+[exportación de facturación](/glosario/#termino-exportacion-de-facturacion) envía los
+datos de uso y costo a BigQuery de forma automática a lo largo del día, con el detalle
+de cuenta, servicio, SKU, proyecto, etiquetas y ubicación. Hay una exportación
+estándar, para tendencias, y una detallada, para costos por recurso.
+
+El consejo de Google es claro y conviene seguirlo al pie de la letra: activarla al
+mismo tiempo que se crea la cuenta de facturación. Según dónde se guarde, los datos
+anteriores no se recuperan. **Si hoy no está activada, pedirlo hoy es gratis; pedirlo
+dentro de un año no devuelve el año perdido.**
+
+## Tres preguntas para la próxima reunión
+
+1. ¿Quién recibe el informe mensual agrupado por proyecto y por etiqueta, y qué parte
+   del gasto está sin etiquetar?
+2. ¿Qué compromisos de uso tenemos firmados, cuándo vencen, y qué porcentaje del
+   compromiso estamos usando?
+3. ¿Está activada la exportación de facturación a BigQuery, y desde cuándo?

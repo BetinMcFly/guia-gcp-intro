@@ -1,13 +1,88 @@
 ---
 titulo: "Regiones, redes y tráfico"
-resumen: "Sección en preparación."
+resumen: "Dónde se pone cada cosa y por dónde viaja cada dato tienen consecuencias de disponibilidad, de cumplimiento y de factura. Meter datos en Google Cloud no cuesta; sacarlos, y moverlos lejos, sí."
 orden: 5
 ---
 
-{/* PENDIENTE: contenido redactado para directivos no técnicos, contrastado con
-    https://cloud.google.com/docs. Sin cifras de precio en prosa. Exporta `fuentes`
-    con los enlaces oficiales que respaldan lo dicho. */}
+export const fuentes = [
+  { titulo: "Geography and regions (documentación)", url: "https://docs.cloud.google.com/docs/geography-and-regions" },
+  { titulo: "VPC networks overview (documentación)", url: "https://docs.cloud.google.com/vpc/docs/overview" },
+  { titulo: "Cloud Load Balancing overview (documentación)", url: "https://docs.cloud.google.com/load-balancing/docs/load-balancing-overview" },
+  { titulo: "Network Service Tiers overview (documentación)", url: "https://docs.cloud.google.com/network-tiers/docs/overview" },
+  { titulo: "VPC network pricing (transferencia de datos)", url: "https://cloud.google.com/vpc/network-pricing" },
+];
 
-export const fuentes = [];
+## Dónde poner cada cosa
 
-Esta sección todavía no está escrita.
+La sección 1 presentó las [regiones](/glosario/#termino-region) y las
+[zonas](/glosario/#termino-zona). Aquí importa la decisión que implican. Google indica
+que la ubicación se elige según los requisitos de latencia, disponibilidad y
+durabilidad, y que cada región tiene tres o más zonas, cada una un dominio de fallo
+independiente.
+
+De ahí salen dos reglas que la dirección puede exigir sin saber más. La primera: lo
+que atiende clientes debería estar repartido en más de una zona, porque una zona
+puede fallar y las demás seguir. La segunda: **la región se elige por motivos, no por
+defecto**. Cerca de los usuarios, si la latencia importa; en un país concreto, si la
+ley o un contrato lo exige; y con precios distintos, porque no todas las regiones
+cuestan lo mismo.
+
+## La red privada de la empresa en la nube
+
+Dentro de Google Cloud, la empresa tiene su propia red privada, llamada
+[VPC](/glosario/#termino-vpc). Google la describe como un recurso global formado por
+[subredes](/glosario/#termino-subred) regionales. Cada red VPC incluye un
+[firewall](/glosario/#termino-firewall) virtual distribuido, cuyas reglas deciden qué
+tráfico puede llegar a qué destino.
+
+Para unir esa red con las oficinas o con el centro de datos propio hay dos opciones:
+Cloud VPN, una conexión cifrada a través de internet, y Cloud Interconnect, una
+conexión física dedicada de alta velocidad. La primera es rápida de montar; la
+segunda es la elección cuando el volumen de datos o la latencia lo justifican.
+
+Lo que conviene retener: **la red es la frontera de seguridad y, a la vez, una de las
+fuentes del costo**. Quién puede entrar lo deciden las reglas del firewall; cuánto
+cuesta mover datos lo decide por dónde pasan.
+
+## Repartir el tráfico: balanceadores
+
+Un [balanceador de carga](/glosario/#termino-balanceador-de-carga) reparte el tráfico
+de los usuarios entre varias copias de una aplicación. Google explica que escala
+conforme crecen los usuarios y que, si las copias principales dejan de responder,
+mueve el tráfico a las de respaldo, incluso en otra región.
+
+Hay balanceadores globales, con copias en varias regiones, y regionales, con copias en
+una sola; y externos, para clientes que llegan desde internet, o internos, para
+tráfico que no sale de Google Cloud. Para la dirección, el balanceador es la pieza
+que convierte «tener varias copias» en «seguir funcionando cuando una falla». Es la
+diferencia entre redundancia en el papel y redundancia real.
+
+## Por qué el tráfico de salida cuesta
+
+Aquí está la regla de precios que más sorprende. Google no cobra la
+[transferencia de datos entrante](/glosario/#termino-transferencia-de-datos): meter
+datos en la nube es gratis, aunque el servicio que los procesa pueda cobrar. Lo que se
+cobra es lo que sale y lo que se mueve. Y cuanto más lejos, más caro: el tráfico
+entre máquinas de la misma zona con direcciones internas no se cobra; entre zonas de
+la misma región, sí; entre regiones, más; entre continentes, más todavía; y hacia
+internet, según el volumen y el nivel de red.
+
+Esa última elección también tiene precio. El
+[nivel de red](/glosario/#termino-nivel-de-red) Premium lleva el tráfico por la red
+propia de Google hasta cerca del usuario; el nivel Standard lo entrega por internet
+público, con menor calidad y menor precio. Si nadie elige, se usa Premium.
+
+Tres consecuencias para quien decide. Una arquitectura que cruza regiones sin motivo
+paga por cada cruce. Un sistema que envía copias de seguridad a otro continente paga
+cada noche. Y **cambiar de proveedor de nube tiene un precio de salida**: todos los
+datos que hay que sacar pasan por esta tarifa. Conviene saberlo antes de guardar
+petabytes, no al querer irse.
+
+## Tres preguntas para la próxima reunión
+
+1. ¿En qué regiones estamos, por qué esas, y lo que atiende clientes está en más de
+   una zona?
+2. ¿Cuánto de nuestra factura es transferencia de datos, y qué parte cruza regiones o
+   sale a internet?
+3. Si tuviéramos que sacar todos nuestros datos de Google Cloud, ¿cuánto costaría y
+   cuánto tardaría?
