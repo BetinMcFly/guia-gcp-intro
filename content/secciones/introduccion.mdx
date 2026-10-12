@@ -4,6 +4,8 @@ resumen: "La nube es alquilar capacidad informática por uso en lugar de comprar
 orden: 1
 ---
 
+import ArquitecturaReferencia from "@/components/figuras/ArquitecturaReferencia";
+
 export const fuentes = [
   { titulo: "What is cloud computing? (Google Cloud)", url: "https://cloud.google.com/learn/what-is-cloud-computing" },
   { titulo: "Google Cloud overview (documentación)", url: "https://docs.cloud.google.com/docs/overview" },
@@ -44,6 +46,12 @@ y que la localización de los datos se rige por las condiciones del servicio. Si
 negocio tiene obligaciones legales sobre dónde pueden guardarse ciertos datos, esa
 pregunta tiene que hacerse antes de que el equipo técnico elija una región por
 costumbre.
+
+Antes de seguir, conviene ver cómo encajan las piezas. Este dibujo resume lo que las
+siguientes secciones explican una a una: todo vive dentro de proyectos, la red es
+global, cada región tiene varias zonas y el dinero entra por una pieza aparte.
+
+<ArquitecturaReferencia />
 
 ## Tres formas de contratar: infraestructura, plataforma o software
 

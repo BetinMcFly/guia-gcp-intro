@@ -4,6 +4,8 @@ resumen: "Todo lo que la empresa usa en Google Cloud vive dentro de un proyecto,
 orden: 2
 ---
 
+import JerarquiaRecursos from "@/components/figuras/JerarquiaRecursos";
+
 export const fuentes = [
   { titulo: "Resource hierarchy (documentación de Resource Manager)", url: "https://docs.cloud.google.com/resource-manager/docs/cloud-platform-resource-hierarchy" },
   { titulo: "IAM overview (documentación)", url: "https://docs.cloud.google.com/iam/docs/overview" },
@@ -94,6 +96,8 @@ La consecuencia: **un permiso dado a nivel de organización es una llave de toda
 casa**. Por eso la pregunta no es solo quién tiene permisos, sino a qué altura los
 tiene. Y por eso las carpetas importan: permiten dar permisos amplios sobre una parte
 de la empresa sin abrir el resto.
+
+<JerarquiaRecursos />
 
 ## Cinco reglas que Google recomienda
 

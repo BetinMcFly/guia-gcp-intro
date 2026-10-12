@@ -1061,3 +1061,138 @@ dl {
   color: var(--secundario);
   overflow-wrap: anywhere;
 }
+
+/* ---------- Figuras (diagramas SVG en línea) ---------- */
+
+.figura {
+  margin: 1.5rem 0 var(--bloque);
+}
+
+.figura-scroll {
+  overflow-x: auto;
+  overflow-y: hidden; /* a propósito: con solo overflow-x, el eje Y pasa a auto y atrapa el gesto táctil */
+  border: 1px solid var(--borde);
+  border-radius: var(--radio);
+  background: var(--fondo);
+  min-width: 0;
+}
+
+.figura svg {
+  display: block;
+  min-width: 40rem;
+  width: 100%;
+  height: auto;
+  font-family: inherit;
+}
+
+.figura figcaption {
+  margin-top: 0.6rem;
+  font-size: 0.9rem;
+  color: var(--secundario);
+}
+
+/* Colores de los diagramas: solo por clase. Un fill="#…" en el marcado ganaría a
+   estas reglas y no se adaptaría al tema. */
+.fig-caja {
+  fill: var(--superficie);
+  stroke: var(--borde);
+  stroke-width: 1.5;
+}
+
+.fig-zona {
+  fill: var(--fondo);
+  stroke: var(--borde);
+  stroke-width: 1.5;
+}
+
+.fig-contenedor {
+  fill: none;
+  stroke: var(--secundario);
+  stroke-width: 1.5;
+  stroke-dasharray: 6 4;
+}
+
+.fig-primario {
+  fill: var(--primario-contenedor);
+  stroke: var(--primario);
+  stroke-width: 1.5;
+}
+
+.fig-primario-texto {
+  fill: var(--primario);
+}
+
+.fig-dinero {
+  fill: var(--dinero-contenedor);
+  stroke: var(--dinero);
+  stroke-width: 1.5;
+}
+
+.fig-dinero-texto {
+  fill: var(--dinero);
+}
+
+.fig-herencia {
+  fill: var(--primario-contenedor);
+  stroke: none;
+  opacity: 0.55;
+}
+
+.fig-texto {
+  fill: var(--texto);
+  font-size: 14px;
+}
+
+.fig-titulo {
+  font-weight: 500;
+}
+
+.fig-compacto {
+  font-size: 13px;
+}
+
+.fig-compacto + .fig-sutil {
+  font-size: 12px;
+}
+
+.fig-sutil {
+  fill: var(--secundario);
+  font-size: 13px;
+}
+
+.fig-flecha {
+  fill: none;
+  stroke: var(--secundario);
+  stroke-width: 1.5;
+}
+
+.fig-flecha-punta {
+  fill: var(--secundario);
+}
+
+.fig-flecha-dinero {
+  fill: none;
+  stroke: var(--dinero);
+  stroke-width: 1.5;
+  stroke-dasharray: 4 4;
+}
+
+.fig-flecha-dinero-punta {
+  fill: var(--dinero);
+}
+
+.fig-flecha-primario {
+  fill: none;
+  stroke: var(--primario);
+  stroke-width: 2;
+}
+
+.fig-flecha-primario-punta {
+  fill: var(--primario);
+}
+
+.fig-linea {
+  fill: none;
+  stroke: var(--borde);
+  stroke-width: 1.5;
+}

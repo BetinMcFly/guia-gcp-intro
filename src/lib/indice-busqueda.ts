@@ -58,6 +58,9 @@ function indexarSeccion(slug: string): EntradaIndice[] {
   s = s.replace(/^---\n[\s\S]*?\n---\n/, "");
   s = s.replace(/^export const fuentes = \[[\s\S]*?\];\n/m, "");
   s = s.replace(/\{\/\*[\s\S]*?\*\/\}/g, "");
+  // Importaciones y etiquetas JSX de figuras: no son texto que buscar.
+  s = s.replace(/^import .*$/gm, "");
+  s = s.replace(/<[A-Z][A-Za-z]*[^>]*\/>/g, "");
 
   const slugger = new GithubSlugger();
   const entradas: EntradaIndice[] = [];

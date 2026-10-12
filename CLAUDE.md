@@ -73,7 +73,8 @@ guia-gcp-intro/
 ├── src/app/                  # App Router: layout, portada, [seccion]/, glosario/, calculadora/, not-found
 ├── src/mdx-components.tsx    # mapeo de elementos MDX (Next lo exige con este nombre)
 ├── src/tipos/mdx.d.ts        # lo que exporta cada módulo MDX: frontmatter y fuentes
-├── src/components/           # Navegacion, TemaToggle, Cuestionario, Calculadora, Glosario, Buscador, Fuente
+├── src/components/           # Navegacion, TemaToggle, Cuestionario, Calculadora, Glosario, Buscador, Fuente,
+│   └── figuras/              #   Figura; primitivas + ArquitecturaReferencia, JerarquiaRecursos, RedGlobal, CadenaFacturacion
 ├── src/lib/                  # contenido.ts (única lectura de content/), precios.ts (estimaciones puras),
 │                         #   indice-busqueda.ts (índice en build con node:fs)
 └── content/
@@ -224,6 +225,25 @@ columna, cualquier hijo adicional cae en la columna 1 por colocación automátic
 eso `.lista-secciones li > *` fija `grid-column: 2`. (2) Con `min-height`, una página
 corta reparte el hueco entre todas las filas de la cuadrícula; por eso `.pagina` fija
 `grid-template-rows` con un único `1fr`.
+
+**Figuras (diagramas SVG en línea, añadidas el 2026-10-12).** Cuatro: arquitectura
+de referencia (sección 1, id `arquitectura-de-referencia`, enlazada desde la portada),
+jerarquía y herencia (2), red global (5) y cadena de facturación (6). Viven en
+`src/components/figuras/`, con `primitivas.tsx` (Caja, Flecha, Marcador, Rotulo) y el
+envoltorio `Figura.tsx`. Reglas:
+
+- **Colores solo por clase CSS** (`.fig-caja`, `.fig-zona`, `.fig-contenedor`,
+  `.fig-primario`, `.fig-dinero`, `.fig-herencia`, `.fig-flecha*`). Un `fill="#…"` en
+  el marcado gana a la hoja de estilos y no se adapta al tema. Los `<marker>` también
+  llevan su clase. La verificación del build busca `(fill|stroke)="#` en `out/`.
+- **El `<desc>` enumera lo mismo que dibuja el SVG.** Es texto duplicado a
+  propósito, para lectores de pantalla; si cambias el dibujo, cambia el `desc` y el pie.
+- `.figura-scroll` desplaza en horizontal en móvil y lleva `overflow-y: hidden` a
+  propósito; el SVG mantiene 40 rem de ancho mínimo para que el texto (13 px mínimo en
+  un `viewBox` de 960) siga legible.
+- **Sin comparaciones con otras nubes** en los diagramas, igual que en el texto.
+- Los MDX importan la figura con `import X from "@/components/figuras/X"` tras el
+  front matter; `indice-busqueda.ts` quita esas líneas y las etiquetas JSX al indexar.
 
 Criterios fijos:
 

@@ -28,6 +28,11 @@ export default async function Portada() {
           dicho. Los precios que aparecen son de lista, en dólares, y llevan la fecha en que se
           verificaron.
         </p>
+        <p>
+          Si prefiere empezar por una imagen,{" "}
+          <Link href="/introduccion/#arquitectura-de-referencia">vea la arquitectura de referencia</Link>:
+          una empresa típica en Google Cloud en un solo dibujo.
+        </p>
       </section>
 
       <section aria-labelledby="secciones">

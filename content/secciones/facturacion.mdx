@@ -4,6 +4,8 @@ resumen: "La factura mensual es un resumen; el detalle está en los informes. Sa
 orden: 6
 ---
 
+import CadenaFacturacion from "@/components/figuras/CadenaFacturacion";
+
 export const fuentes = [
   { titulo: "Cloud Billing concepts (documentación)", url: "https://docs.cloud.google.com/billing/docs/concepts" },
   { titulo: "Understand your invoice (documentación)", url: "https://docs.cloud.google.com/billing/docs/how-to/read-invoice" },
@@ -29,6 +31,8 @@ documentación, hacia el quinto día hábil del mes siguiente, con todos los cos
 mes natural. Y un aviso importante: **la factura en PDF es un resumen**. Google indica
 que no detalla cada recurso ni, desde hace años, el costo por proyecto. Para eso
 existen los informes.
+
+<CadenaFacturacion />
 
 ## Los informes de facturación
 

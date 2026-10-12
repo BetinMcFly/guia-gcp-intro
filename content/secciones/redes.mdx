@@ -4,6 +4,8 @@ resumen: "Dónde se pone cada cosa y por dónde viaja cada dato tienen consecuen
 orden: 5
 ---
 
+import RedGlobal from "@/components/figuras/RedGlobal";
+
 export const fuentes = [
   { titulo: "Geography and regions (documentación)", url: "https://docs.cloud.google.com/docs/geography-and-regions" },
   { titulo: "VPC networks overview (documentación)", url: "https://docs.cloud.google.com/vpc/docs/overview" },
@@ -43,6 +45,8 @@ segunda es la elección cuando el volumen de datos o la latencia lo justifican.
 Lo que conviene retener: **la red es la frontera de seguridad y, a la vez, una de las
 fuentes del costo**. Quién puede entrar lo deciden las reglas del firewall; cuánto
 cuesta mover datos lo decide por dónde pasan.
+
+<RedGlobal />
 
 ## Repartir el tráfico: balanceadores
 
